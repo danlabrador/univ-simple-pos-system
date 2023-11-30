@@ -10,7 +10,7 @@ This project aims to develop a Java-based Point of Sale (POS) system, utilizing 
 
 - Java Development Kit (JDK)
 - NetBeans IDE
-- MySQL or similar database system
+- MySQL
 
 ### Installation
 
