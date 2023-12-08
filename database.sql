@@ -27,5 +27,6 @@ CREATE TABLE IF NOT EXISTS product_order (
   FOREIGN KEY(product_id) REFERENCES products(id),
   order_id INT,
   FOREIGN KEY(order_id) REFERENCES `order`(id),
+  price DECIMAL(10,2),
   quantity INT
 );
