@@ -25,3 +25,5 @@ replay_pid*
 
 # others
 plan.txt
+/nbproject/private/
+/build/
