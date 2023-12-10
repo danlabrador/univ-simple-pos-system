@@ -1,6 +1,20 @@
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Toolkit;
-import java.awt.Image;
-import javax.swing.JFrame;
+import java.text.DecimalFormat;
+import java.util.Random;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 public class App extends javax.swing.JFrame {
 
@@ -9,7 +23,96 @@ public class App extends javax.swing.JFrame {
      */
     public App() {
         initComponents();
+        applyTableStyle(tblData);
+        testData(tblData);
     }
+    
+    private void testData(JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(getRandomRowData("Beer"));
+        model.addRow(getRandomRowData("Shirt"));
+        model.addRow(getRandomRowData("Laptop"));
+        model.addRow(getRandomRowData("Book"));
+        model.addRow(getRandomRowData("Coffee"));
+        model.addRow(getRandomRowData("Phone"));
+        model.addRow(getRandomRowData("Chair"));
+        model.addRow(getRandomRowData("Watch"));
+        model.addRow(getRandomRowData("Sunglasses"));
+        model.addRow(getRandomRowData("Bag"));
+        model.addRow(getRandomRowData("Headphones"));
+        model.addRow(getRandomRowData("Camera"));
+        model.addRow(getRandomRowData("Necklace"));
+        model.addRow(getRandomRowData("Perfume"));
+        model.addRow(getRandomRowData("Wallet"));
+        model.addRow(getRandomRowData("Jacket"));
+        model.addRow(getRandomRowData("Bicycle"));
+        model.addRow(getRandomRowData("Game console"));
+        model.addRow(getRandomRowData("Tennis racket"));
+        model.addRow(getRandomRowData("Watch"));
+        model.addRow(getRandomRowData("Sunglasses"));
+        model.addRow(getRandomRowData("Bag"));
+        model.addRow(getRandomRowData("Headphones"));
+        model.addRow(getRandomRowData("Camera"));
+        model.addRow(getRandomRowData("Necklace"));
+        model.addRow(getRandomRowData("Perfume"));
+        model.addRow(getRandomRowData("Wallet"));
+        model.addRow(getRandomRowData("Jacket"));
+        model.addRow(getRandomRowData("Bicycle"));
+        model.addRow(getRandomRowData("Game console"));
+        model.addRow(getRandomRowData("Tennis racket"));
+    }
+    
+    private Object[] getRandomRowData(String name) {
+        DecimalFormat df = new DecimalFormat("#,##0.##");
+        return new Object[]{1, name, df.format(getAmount(130,250)), (int) getAmount(1, 300)};
+    }
+    
+    private void testStaging(JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(getRandomRowStaging("Beer"));
+        model.addRow(getRandomRowStaging("Shirt"));
+        model.addRow(getRandomRowStaging("Laptop"));
+        model.addRow(getRandomRowStaging("Book"));
+        model.addRow(getRandomRowStaging("Coffee"));
+        model.addRow(getRandomRowStaging("Phone"));
+        model.addRow(getRandomRowStaging("Chair"));
+        model.addRow(getRandomRowStaging("Watch"));
+        model.addRow(getRandomRowStaging("Sunglasses"));
+        model.addRow(getRandomRowStaging("Bag"));
+        model.addRow(getRandomRowStaging("Headphones"));
+        model.addRow(getRandomRowStaging("Camera"));
+        model.addRow(getRandomRowStaging("Necklace"));
+        model.addRow(getRandomRowStaging("Perfume"));
+        model.addRow(getRandomRowStaging("Wallet"));
+        model.addRow(getRandomRowStaging("Jacket"));
+        model.addRow(getRandomRowStaging("Bicycle"));
+        model.addRow(getRandomRowStaging("Game console"));
+        model.addRow(getRandomRowStaging("Tennis racket"));
+        model.addRow(getRandomRowStaging("Watch"));
+        model.addRow(getRandomRowStaging("Sunglasses"));
+        model.addRow(getRandomRowStaging("Bag"));
+        model.addRow(getRandomRowStaging("Headphones"));
+        model.addRow(getRandomRowStaging("Camera"));
+        model.addRow(getRandomRowStaging("Necklace"));
+        model.addRow(getRandomRowStaging("Perfume"));
+        model.addRow(getRandomRowStaging("Wallet"));
+        model.addRow(getRandomRowStaging("Jacket"));
+        model.addRow(getRandomRowStaging("Bicycle"));
+        model.addRow(getRandomRowStaging("Game console"));
+        model.addRow(getRandomRowStaging("Tennis racket"));
+    }
+    
+    private Object[] getRandomRowStaging(String name) {
+        DecimalFormat df = new DecimalFormat("#,##0.##");
+        return new Object[]{1, name, df.format(getAmount(130,250)), (int) getAmount(1, 300), df.format(getAmount(130,2500))};
+    }
+    
+    
+    private double getAmount(int from, int to) {
+        Random ran = new Random();
+        return (ran.nextInt(to - from) + from) * ran.nextDouble();
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,12 +139,13 @@ public class App extends javax.swing.JFrame {
         btnControlSave = new javax.swing.JButton();
         btnControlSearch1 = new javax.swing.JButton();
         pnlControlConsole = new javax.swing.JPanel();
-        lblControlConsole = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         pnlControlMajotButtons = new javax.swing.JPanel();
         btnControlLeftButton = new javax.swing.JButton();
         btnControlRightButton = new javax.swing.JButton();
-        pnlSideTable = new javax.swing.JPanel();
-        pnlControlMajorButtons = new javax.swing.JPanel();
+        crzypnlSide = new raven.crazypanel.CrazyPanel();
+        scrollStaging = new javax.swing.JScrollPane();
+        tblStaging = new javax.swing.JTable();
         pnlNorth = new javax.swing.JPanel();
         pnlLogo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -54,12 +158,15 @@ public class App extends javax.swing.JFrame {
         btnManageTab = new javax.swing.JButton();
         pnlDisplayLocation = new javax.swing.JPanel();
         lblDisplayLocation = new javax.swing.JLabel();
+        crzypnlCenter = new raven.crazypanel.CrazyPanel();
+        scrollData = new javax.swing.JScrollPane();
+        tblData = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("The Coffee Canvas");
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(245, 245, 245));
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/img/favicon.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/img/icon.png")));
         setMinimumSize(new java.awt.Dimension(1194, 834));
         setResizable(false);
 
@@ -204,10 +311,13 @@ public class App extends javax.swing.JFrame {
         pnlControlConsole.setPreferredSize(new java.awt.Dimension(329, 30));
         pnlControlConsole.setLayout(new java.awt.BorderLayout());
 
-        lblControlConsole.setForeground(new java.awt.Color(183, 183, 183));
-        lblControlConsole.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblControlConsole.setText("Welcome!");
-        pnlControlConsole.add(lblControlConsole, java.awt.BorderLayout.CENTER);
+        jTextField1.setBackground(new java.awt.Color(31, 31, 31));
+        jTextField1.setFont(new java.awt.Font("Gilroy-Regular", 0, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(229, 229, 229));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("Welcome!");
+        jTextField1.setBorder(null);
+        pnlControlConsole.add(jTextField1, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -245,38 +355,59 @@ public class App extends javax.swing.JFrame {
 
         pnlSide.add(pnlSideControls, java.awt.BorderLayout.SOUTH);
 
-        pnlSideTable.setBackground(new java.awt.Color(0, 0, 0));
+        crzypnlSide.setBackground(new java.awt.Color(0, 0, 0));
+        crzypnlSide.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+            "wrap,fill,insets 20",
+            "[fill]",
+            "[fill]",
+            new String[]{
+                ""
+            }
+        ));
 
-        javax.swing.GroupLayout pnlSideTableLayout = new javax.swing.GroupLayout(pnlSideTable);
-        pnlSideTable.setLayout(pnlSideTableLayout);
-        pnlSideTableLayout.setHorizontalGroup(
-            pnlSideTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 492, Short.MAX_VALUE)
-        );
-        pnlSideTableLayout.setVerticalGroup(
-            pnlSideTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 518, Short.MAX_VALUE)
-        );
+        tblStaging.setBackground(new java.awt.Color(31, 31, 31));
+        tblStaging.setFont(new java.awt.Font("Gilroy-Black", 0, 12)); // NOI18N
+        tblStaging.setForeground(new java.awt.Color(255, 255, 255));
+        tblStaging.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Menu Item", "Price", "Qty", "Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
-        pnlSide.add(pnlSideTable, java.awt.BorderLayout.CENTER);
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        scrollStaging.setViewportView(tblStaging);
+        if (tblStaging.getColumnModel().getColumnCount() > 0) {
+            tblStaging.getColumnModel().getColumn(0).setResizable(false);
+            tblStaging.getColumnModel().getColumn(1).setResizable(false);
+            tblStaging.getColumnModel().getColumn(2).setResizable(false);
+            tblStaging.getColumnModel().getColumn(3).setResizable(false);
+            tblStaging.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        crzypnlSide.add(scrollStaging);
+
+        pnlSide.add(crzypnlSide, java.awt.BorderLayout.CENTER);
 
         pnlRoot.add(pnlSide, java.awt.BorderLayout.WEST);
-
-        pnlControlMajorButtons.setBackground(new java.awt.Color(245, 245, 245));
-        pnlControlMajorButtons.setPreferredSize(new java.awt.Dimension(702, 834));
-
-        javax.swing.GroupLayout pnlControlMajorButtonsLayout = new javax.swing.GroupLayout(pnlControlMajorButtons);
-        pnlControlMajorButtons.setLayout(pnlControlMajorButtonsLayout);
-        pnlControlMajorButtonsLayout.setHorizontalGroup(
-            pnlControlMajorButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnlControlMajorButtonsLayout.setVerticalGroup(
-            pnlControlMajorButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 736, Short.MAX_VALUE)
-        );
-
-        pnlRoot.add(pnlControlMajorButtons, java.awt.BorderLayout.CENTER);
 
         pnlNorth.setBackground(new java.awt.Color(255, 0, 0));
         pnlNorth.setPreferredSize(new java.awt.Dimension(1194, 98));
@@ -301,7 +432,7 @@ public class App extends javax.swing.JFrame {
         pnlTabbedControls.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         Spacing.setBackground(new java.awt.Color(245, 245, 245));
-        Spacing.setPreferredSize(new java.awt.Dimension(387, 10));
+        Spacing.setPreferredSize(new java.awt.Dimension(387, 30));
 
         javax.swing.GroupLayout SpacingLayout = new javax.swing.GroupLayout(Spacing);
         Spacing.setLayout(SpacingLayout);
@@ -311,19 +442,19 @@ public class App extends javax.swing.JFrame {
         );
         SpacingLayout.setVerticalGroup(
             SpacingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
+            .addGap(0, 30, Short.MAX_VALUE)
         );
 
         pnlTabbedControls.add(Spacing);
 
         Spacing1.setBackground(new java.awt.Color(245, 245, 245));
-        Spacing1.setPreferredSize(new java.awt.Dimension(15, 10));
+        Spacing1.setPreferredSize(new java.awt.Dimension(40, 10));
 
         javax.swing.GroupLayout Spacing1Layout = new javax.swing.GroupLayout(Spacing1);
         Spacing1.setLayout(Spacing1Layout);
         Spacing1Layout.setHorizontalGroup(
             Spacing1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 15, Short.MAX_VALUE)
+            .addGap(0, 40, Short.MAX_VALUE)
         );
         Spacing1Layout.setVerticalGroup(
             Spacing1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -384,13 +515,59 @@ public class App extends javax.swing.JFrame {
         lblDisplayLocation.setText("MENU  ");
         lblDisplayLocation.setPreferredSize(new java.awt.Dimension(364, 51));
         lblDisplayLocation.setRequestFocusEnabled(false);
-        pnlDisplayLocation.add(lblDisplayLocation, java.awt.BorderLayout.EAST);
+        pnlDisplayLocation.add(lblDisplayLocation, java.awt.BorderLayout.CENTER);
 
         pnlNorthControls.add(pnlDisplayLocation, java.awt.BorderLayout.CENTER);
 
         pnlNorth.add(pnlNorthControls, java.awt.BorderLayout.CENTER);
 
         pnlRoot.add(pnlNorth, java.awt.BorderLayout.NORTH);
+
+        crzypnlCenter.setBackground(new java.awt.Color(245, 245, 245));
+        crzypnlCenter.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+            "wrap,fill,insets 50",
+            "[fill]",
+            "[fill]",
+            null
+        ));
+        crzypnlCenter.setPreferredSize(new java.awt.Dimension(600, 502));
+
+        tblData.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tblData.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "MENU ITEM", "PRICE", "QUANTITY"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblData.setRowHeight(30);
+        scrollData.setViewportView(tblData);
+        if (tblData.getColumnModel().getColumnCount() > 0) {
+            tblData.getColumnModel().getColumn(0).setResizable(false);
+            tblData.getColumnModel().getColumn(1).setResizable(false);
+            tblData.getColumnModel().getColumn(2).setResizable(false);
+            tblData.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        crzypnlCenter.add(scrollData);
+
+        pnlRoot.add(crzypnlCenter, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(pnlRoot, java.awt.BorderLayout.CENTER);
 
@@ -425,34 +602,62 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnManageTabActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private TableCellRenderer getAlignmentCellRender(TableCellRenderer oldRender, boolean header) {
+        return new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component com = oldRender.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (com instanceof JLabel) {
+                    JLabel label = (JLabel) com;
+                    if (column == 0 || column == 4) {
+                        label.setHorizontalAlignment(SwingConstants.CENTER);
+                    } else if (column == 2 || column == 3) {
+                        label.setHorizontalAlignment(SwingConstants.TRAILING);
+                    } else {
+                        label.setHorizontalAlignment(SwingConstants.LEADING);
+                    }
+                    if (header == false) {
+                        if (column == 4) {
+                            if (Double.parseDouble(value.toString()) > 0) {
+                                com.setForeground(new Color(17, 182, 60));
+                                label.setText("+" + value);
+                            } else {
+                                com.setForeground(new Color(202, 48, 48));
+                            }
+                        } else {
+                            if (isSelected) {
+                                com.setForeground(table.getSelectionForeground());
+                            } else {
+                                com.setForeground(table.getForeground());
+                            }
+                        }
+                    }
                 }
+                return com;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+        };
+    }
+    
+    private void applyTableStyle(JTable table) {
+        JScrollPane scroll = (JScrollPane) table.getParent().getParent();
+        scroll.setBorder(BorderFactory.createEmptyBorder());
+        scroll.getVerticalScrollBar().putClientProperty(FlatClientProperties.STYLE, ""
+                + "background:$Table.background;"
+                + "track:$Table.background;"
+                + "trackArc:999");
 
-        /* Create and display the form */
+        table.getTableHeader().putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
+        table.putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
+
+        //  To Create table alignment
+        table.getTableHeader().setDefaultRenderer(getAlignmentCellRender(table.getTableHeader().getDefaultRenderer(), true));
+        table.setDefaultRenderer(Object.class, getAlignmentCellRender(table.getDefaultRenderer(Object.class), false));
+    }
+    
+    public static void main(String args[]) {
+        FlatIntelliJLaf.registerCustomDefaultsSource("style");
+        FlatRobotoFont.install();
+        FlatIntelliJLaf.setup();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new App().setVisible(true);
@@ -473,13 +678,14 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JButton btnControlSearch1;
     private javax.swing.JButton btnManageTab;
     private javax.swing.JButton btnSellTab;
+    private raven.crazypanel.CrazyPanel crzypnlCenter;
+    private raven.crazypanel.CrazyPanel crzypnlSide;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblControlConsole;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblControlID;
     private javax.swing.JLabel lblControlID1;
     private javax.swing.JLabel lblDisplayLocation;
     private javax.swing.JPanel pnlControlConsole;
-    private javax.swing.JPanel pnlControlMajorButtons;
     private javax.swing.JPanel pnlControlMajotButtons;
     private javax.swing.JPanel pnlDisplayLocation;
     private javax.swing.JPanel pnlIDControl;
@@ -490,8 +696,11 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel pnlRoot;
     private javax.swing.JPanel pnlSide;
     private javax.swing.JPanel pnlSideControls;
-    private javax.swing.JPanel pnlSideTable;
     private javax.swing.JPanel pnlTabbedControls;
+    private javax.swing.JScrollPane scrollData;
+    private javax.swing.JScrollPane scrollStaging;
+    private javax.swing.JTable tblData;
+    private javax.swing.JTable tblStaging;
     private javax.swing.JTextField txtControlID;
     private javax.swing.JTextField txtControlID1;
     // End of variables declaration//GEN-END:variables
