@@ -295,6 +295,7 @@ public class App extends javax.swing.JFrame {
 
         pnlSide.add(pnlSideControls, java.awt.BorderLayout.SOUTH);
 
+        crzypnlStaging.setBackground(new java.awt.Color(0, 0, 0));
         crzypnlStaging.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "",
             new String[]{
