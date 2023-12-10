@@ -45,7 +45,7 @@ public class App extends javax.swing.JFrame {
     public App() {
         initComponents();
         applyTblDataStyle(tblData);
-        TestData.populateTblData(tblData);
+        DatabaseUtil.populateTblData(tblData);
         applyTblStagingStyle(tblStaging);
         TestData.populateTblStaging(tblStaging);
     }
