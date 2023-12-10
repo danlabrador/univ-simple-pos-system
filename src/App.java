@@ -45,7 +45,15 @@ public class App extends javax.swing.JFrame {
         pnlNorth = new javax.swing.JPanel();
         pnlLogo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        pnlCenterControls = new javax.swing.JPanel();
+        pnlNorthControls = new javax.swing.JPanel();
+        pnlTabbedControls = new javax.swing.JPanel();
+        Spacing = new javax.swing.JPanel();
+        Spacing1 = new javax.swing.JPanel();
+        btnSellTab = new javax.swing.JButton();
+        Spacing2 = new javax.swing.JPanel();
+        btnManageTab = new javax.swing.JButton();
+        pnlDisplayLocation = new javax.swing.JPanel();
+        lblDisplayLocation = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("The Coffee Canvas");
@@ -285,20 +293,102 @@ public class App extends javax.swing.JFrame {
 
         pnlNorth.add(pnlLogo, java.awt.BorderLayout.WEST);
 
-        pnlCenterControls.setBackground(new java.awt.Color(245, 245, 245));
+        pnlNorthControls.setBackground(new java.awt.Color(245, 245, 245));
+        pnlNorthControls.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout pnlCenterControlsLayout = new javax.swing.GroupLayout(pnlCenterControls);
-        pnlCenterControls.setLayout(pnlCenterControlsLayout);
-        pnlCenterControlsLayout.setHorizontalGroup(
-            pnlCenterControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 702, Short.MAX_VALUE)
+        pnlTabbedControls.setBackground(new java.awt.Color(245, 245, 245));
+        pnlTabbedControls.setPreferredSize(new java.awt.Dimension(364, 98));
+        pnlTabbedControls.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        Spacing.setBackground(new java.awt.Color(245, 245, 245));
+        Spacing.setPreferredSize(new java.awt.Dimension(387, 10));
+
+        javax.swing.GroupLayout SpacingLayout = new javax.swing.GroupLayout(Spacing);
+        Spacing.setLayout(SpacingLayout);
+        SpacingLayout.setHorizontalGroup(
+            SpacingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 387, Short.MAX_VALUE)
         );
-        pnlCenterControlsLayout.setVerticalGroup(
-            pnlCenterControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 98, Short.MAX_VALUE)
+        SpacingLayout.setVerticalGroup(
+            SpacingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        pnlNorth.add(pnlCenterControls, java.awt.BorderLayout.CENTER);
+        pnlTabbedControls.add(Spacing);
+
+        Spacing1.setBackground(new java.awt.Color(245, 245, 245));
+        Spacing1.setPreferredSize(new java.awt.Dimension(15, 10));
+
+        javax.swing.GroupLayout Spacing1Layout = new javax.swing.GroupLayout(Spacing1);
+        Spacing1.setLayout(Spacing1Layout);
+        Spacing1Layout.setHorizontalGroup(
+            Spacing1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 15, Short.MAX_VALUE)
+        );
+        Spacing1Layout.setVerticalGroup(
+            Spacing1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        pnlTabbedControls.add(Spacing1);
+
+        btnSellTab.setBackground(new java.awt.Color(222, 179, 137));
+        btnSellTab.setFont(new java.awt.Font("Gilroy-Bold", 0, 24)); // NOI18N
+        btnSellTab.setText("Sell");
+        btnSellTab.setBorder(null);
+        btnSellTab.setPreferredSize(new java.awt.Dimension(115, 50));
+        btnSellTab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSellTabActionPerformed(evt);
+            }
+        });
+        pnlTabbedControls.add(btnSellTab);
+
+        Spacing2.setBackground(new java.awt.Color(245, 245, 245));
+        Spacing2.setPreferredSize(new java.awt.Dimension(5, 10));
+
+        javax.swing.GroupLayout Spacing2Layout = new javax.swing.GroupLayout(Spacing2);
+        Spacing2.setLayout(Spacing2Layout);
+        Spacing2Layout.setHorizontalGroup(
+            Spacing2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 5, Short.MAX_VALUE)
+        );
+        Spacing2Layout.setVerticalGroup(
+            Spacing2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        pnlTabbedControls.add(Spacing2);
+
+        btnManageTab.setBackground(new java.awt.Color(217, 217, 217));
+        btnManageTab.setFont(new java.awt.Font("Gilroy-Bold", 0, 24)); // NOI18N
+        btnManageTab.setText("Manage");
+        btnManageTab.setBorder(null);
+        btnManageTab.setPreferredSize(new java.awt.Dimension(150, 50));
+        btnManageTab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageTabActionPerformed(evt);
+            }
+        });
+        pnlTabbedControls.add(btnManageTab);
+
+        pnlNorthControls.add(pnlTabbedControls, java.awt.BorderLayout.WEST);
+
+        pnlDisplayLocation.setBackground(new java.awt.Color(245, 245, 245));
+        pnlDisplayLocation.setPreferredSize(new java.awt.Dimension(364, 98));
+        pnlDisplayLocation.setLayout(new java.awt.BorderLayout());
+
+        lblDisplayLocation.setBackground(new java.awt.Color(245, 245, 245));
+        lblDisplayLocation.setFont(new java.awt.Font("Gilroy-Black", 0, 40)); // NOI18N
+        lblDisplayLocation.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lblDisplayLocation.setText("MENU  ");
+        lblDisplayLocation.setPreferredSize(new java.awt.Dimension(364, 51));
+        lblDisplayLocation.setRequestFocusEnabled(false);
+        pnlDisplayLocation.add(lblDisplayLocation, java.awt.BorderLayout.EAST);
+
+        pnlNorthControls.add(pnlDisplayLocation, java.awt.BorderLayout.CENTER);
+
+        pnlNorth.add(pnlNorthControls, java.awt.BorderLayout.CENTER);
 
         pnlRoot.add(pnlNorth, java.awt.BorderLayout.NORTH);
 
@@ -326,6 +416,14 @@ public class App extends javax.swing.JFrame {
     private void btnControlSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlSearch1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnControlSearch1ActionPerformed
+
+    private void btnSellTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSellTabActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSellTabActionPerformed
+
+    private void btnManageTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageTabActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnManageTabActionPerformed
 
     /**
      * @param args the command line arguments
@@ -363,6 +461,9 @@ public class App extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Spacing;
+    private javax.swing.JPanel Spacing1;
+    private javax.swing.JPanel Spacing2;
     private javax.swing.JButton btnControlAdd;
     private javax.swing.JButton btnControlLeftButton;
     private javax.swing.JButton btnControlRemove;
@@ -370,22 +471,27 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JButton btnControlSave;
     private javax.swing.JButton btnControlSearch;
     private javax.swing.JButton btnControlSearch1;
+    private javax.swing.JButton btnManageTab;
+    private javax.swing.JButton btnSellTab;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblControlConsole;
     private javax.swing.JLabel lblControlID;
     private javax.swing.JLabel lblControlID1;
-    private javax.swing.JPanel pnlCenterControls;
+    private javax.swing.JLabel lblDisplayLocation;
     private javax.swing.JPanel pnlControlConsole;
     private javax.swing.JPanel pnlControlMajorButtons;
     private javax.swing.JPanel pnlControlMajotButtons;
+    private javax.swing.JPanel pnlDisplayLocation;
     private javax.swing.JPanel pnlIDControl;
     private javax.swing.JPanel pnlIDControl1;
     private javax.swing.JPanel pnlLogo;
     private javax.swing.JPanel pnlNorth;
+    private javax.swing.JPanel pnlNorthControls;
     private javax.swing.JPanel pnlRoot;
     private javax.swing.JPanel pnlSide;
     private javax.swing.JPanel pnlSideControls;
     private javax.swing.JPanel pnlSideTable;
+    private javax.swing.JPanel pnlTabbedControls;
     private javax.swing.JTextField txtControlID;
     private javax.swing.JTextField txtControlID1;
     // End of variables declaration//GEN-END:variables
