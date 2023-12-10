@@ -20,9 +20,13 @@ public class App extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlStaging = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        pnlRoot = new javax.swing.JPanel();
+        pnlSide = new javax.swing.JPanel();
+        pnlCenter = new javax.swing.JPanel();
+        pnlNorth = new javax.swing.JPanel();
+        pnlLogo = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        pnlCenterControls = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("The Coffee Canvas");
@@ -32,67 +36,61 @@ public class App extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1194, 834));
         setResizable(false);
 
-        pnlStaging.setBackground(new java.awt.Color(0, 0, 0));
-        pnlStaging.setPreferredSize(new java.awt.Dimension(492, 834));
+        pnlRoot.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(new java.awt.Color(31, 31, 31));
-        jPanel1.setPreferredSize(new java.awt.Dimension(492, 98));
+        pnlSide.setBackground(new java.awt.Color(0, 0, 0));
+        pnlSide.setPreferredSize(new java.awt.Dimension(492, 834));
+        pnlRoot.add(pnlSide, java.awt.BorderLayout.WEST);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 492, Short.MAX_VALUE)
+        pnlCenter.setBackground(new java.awt.Color(245, 245, 245));
+        pnlCenter.setPreferredSize(new java.awt.Dimension(702, 834));
+
+        javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
+        pnlCenter.setLayout(pnlCenterLayout);
+        pnlCenterLayout.setHorizontalGroup(
+            pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlCenterLayout.setVerticalGroup(
+            pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 736, Short.MAX_VALUE)
+        );
+
+        pnlRoot.add(pnlCenter, java.awt.BorderLayout.CENTER);
+
+        pnlNorth.setBackground(new java.awt.Color(255, 0, 0));
+        pnlNorth.setPreferredSize(new java.awt.Dimension(1194, 98));
+        pnlNorth.setLayout(new java.awt.BorderLayout());
+
+        pnlLogo.setBackground(new java.awt.Color(31, 31, 31));
+        pnlLogo.setPreferredSize(new java.awt.Dimension(492, 98));
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Dan Labrador\\OneDrive - addu.edu.ph\\Documents\\CS 2136\\7 GUI\\univ-simple-pos-system\\src\\resources\\img\\logo.png")); // NOI18N
+        jLabel1.setToolTipText("");
+        jLabel1.setPreferredSize(new java.awt.Dimension(480, 86));
+        pnlLogo.add(jLabel1);
+
+        pnlNorth.add(pnlLogo, java.awt.BorderLayout.WEST);
+
+        pnlCenterControls.setBackground(new java.awt.Color(245, 245, 245));
+
+        javax.swing.GroupLayout pnlCenterControlsLayout = new javax.swing.GroupLayout(pnlCenterControls);
+        pnlCenterControls.setLayout(pnlCenterControlsLayout);
+        pnlCenterControlsLayout.setHorizontalGroup(
+            pnlCenterControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 702, Short.MAX_VALUE)
+        );
+        pnlCenterControlsLayout.setVerticalGroup(
+            pnlCenterControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 98, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout pnlStagingLayout = new javax.swing.GroupLayout(pnlStaging);
-        pnlStaging.setLayout(pnlStagingLayout);
-        pnlStagingLayout.setHorizontalGroup(
-            pnlStagingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        pnlStagingLayout.setVerticalGroup(
-            pnlStagingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlStagingLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 736, Short.MAX_VALUE))
-        );
+        pnlNorth.add(pnlCenterControls, java.awt.BorderLayout.CENTER);
 
-        jPanel2.setBackground(new java.awt.Color(255, 51, 0));
+        pnlRoot.add(pnlNorth, java.awt.BorderLayout.NORTH);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 503, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlStaging, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 193, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlStaging, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        getContentPane().add(pnlRoot, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -133,8 +131,12 @@ public class App extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel pnlStaging;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel pnlCenter;
+    private javax.swing.JPanel pnlCenterControls;
+    private javax.swing.JPanel pnlLogo;
+    private javax.swing.JPanel pnlNorth;
+    private javax.swing.JPanel pnlRoot;
+    private javax.swing.JPanel pnlSide;
     // End of variables declaration//GEN-END:variables
 }
