@@ -19,10 +19,29 @@ public class App extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         pnlRoot = new javax.swing.JPanel();
         pnlSide = new javax.swing.JPanel();
-        pnlCenter = new javax.swing.JPanel();
+        pnlSideControls = new javax.swing.JPanel();
+        pnlIDControl = new javax.swing.JPanel();
+        lblControlID = new javax.swing.JLabel();
+        txtControlID = new javax.swing.JTextField();
+        pnlIDControl1 = new javax.swing.JPanel();
+        lblControlID1 = new javax.swing.JLabel();
+        txtControlID1 = new javax.swing.JTextField();
+        btnControlAdd = new javax.swing.JButton();
+        btnControlRemove = new javax.swing.JButton();
+        btnControlSearch = new javax.swing.JButton();
+        btnControlSave = new javax.swing.JButton();
+        btnControlSearch1 = new javax.swing.JButton();
+        pnlControlConsole = new javax.swing.JPanel();
+        lblControlConsole = new javax.swing.JLabel();
+        pnlControlMajotButtons = new javax.swing.JPanel();
+        btnControlLeftButton = new javax.swing.JButton();
+        btnControlRightButton = new javax.swing.JButton();
+        pnlSideTable = new javax.swing.JPanel();
+        pnlControlMajorButtons = new javax.swing.JPanel();
         pnlNorth = new javax.swing.JPanel();
         pnlLogo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -40,23 +59,216 @@ public class App extends javax.swing.JFrame {
 
         pnlSide.setBackground(new java.awt.Color(0, 0, 0));
         pnlSide.setPreferredSize(new java.awt.Dimension(492, 834));
+        pnlSide.setLayout(new java.awt.BorderLayout());
+
+        pnlSideControls.setBackground(new java.awt.Color(0, 0, 0));
+        pnlSideControls.setPreferredSize(new java.awt.Dimension(492, 218));
+        pnlSideControls.setLayout(new java.awt.GridBagLayout());
+
+        pnlIDControl.setBackground(new java.awt.Color(0, 0, 0));
+        pnlIDControl.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnlIDControl.setPreferredSize(new java.awt.Dimension(97, 64));
+        pnlIDControl.setLayout(new java.awt.BorderLayout());
+
+        lblControlID.setFont(new java.awt.Font("Gilroy-Bold", 0, 16)); // NOI18N
+        lblControlID.setForeground(new java.awt.Color(255, 255, 255));
+        lblControlID.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblControlID.setText("ID");
+        lblControlID.setAlignmentY(0.0F);
+        pnlIDControl.add(lblControlID, java.awt.BorderLayout.CENTER);
+
+        txtControlID.setFont(new java.awt.Font("Gilroy-Medium", 0, 20)); // NOI18N
+        txtControlID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtControlID.setText("0");
+        txtControlID.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        txtControlID.setPreferredSize(new java.awt.Dimension(97, 41));
+        txtControlID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtControlIDActionPerformed(evt);
+            }
+        });
+        pnlIDControl.add(txtControlID, java.awt.BorderLayout.PAGE_END);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 0, 5);
+        pnlSideControls.add(pnlIDControl, gridBagConstraints);
+
+        pnlIDControl1.setBackground(new java.awt.Color(0, 0, 0));
+        pnlIDControl1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnlIDControl1.setPreferredSize(new java.awt.Dimension(97, 64));
+        pnlIDControl1.setLayout(new java.awt.BorderLayout());
+
+        lblControlID1.setFont(new java.awt.Font("Gilroy-Bold", 0, 16)); // NOI18N
+        lblControlID1.setForeground(new java.awt.Color(255, 255, 255));
+        lblControlID1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblControlID1.setText("Qty");
+        lblControlID1.setAlignmentY(0.0F);
+        pnlIDControl1.add(lblControlID1, java.awt.BorderLayout.CENTER);
+
+        txtControlID1.setFont(new java.awt.Font("Gilroy-Medium", 0, 20)); // NOI18N
+        txtControlID1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtControlID1.setText("0");
+        txtControlID1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        txtControlID1.setPreferredSize(new java.awt.Dimension(97, 41));
+        txtControlID1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtControlID1ActionPerformed(evt);
+            }
+        });
+        pnlIDControl1.add(txtControlID1, java.awt.BorderLayout.PAGE_END);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.insets = new java.awt.Insets(4, 5, 0, 5);
+        pnlSideControls.add(pnlIDControl1, gridBagConstraints);
+
+        btnControlAdd.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 16)); // NOI18N
+        btnControlAdd.setForeground(new java.awt.Color(35, 166, 95));
+        btnControlAdd.setText("Add");
+        btnControlAdd.setBorder(null);
+        btnControlAdd.setPreferredSize(new java.awt.Dimension(115, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        pnlSideControls.add(btnControlAdd, gridBagConstraints);
+
+        btnControlRemove.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 16)); // NOI18N
+        btnControlRemove.setForeground(new java.awt.Color(230, 70, 59));
+        btnControlRemove.setText("Remove");
+        btnControlRemove.setBorder(null);
+        btnControlRemove.setPreferredSize(new java.awt.Dimension(115, 30));
+        btnControlRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnControlRemoveActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 0);
+        pnlSideControls.add(btnControlRemove, gridBagConstraints);
+
+        btnControlSearch.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 16)); // NOI18N
+        btnControlSearch.setText("Search");
+        btnControlSearch.setToolTipText("");
+        btnControlSearch.setBorder(null);
+        btnControlSearch.setPreferredSize(new java.awt.Dimension(115, 30));
+        btnControlSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnControlSearchActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(6, 5, 2, 1);
+        pnlSideControls.add(btnControlSearch, gridBagConstraints);
+
+        btnControlSave.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 16)); // NOI18N
+        btnControlSave.setText("Edit");
+        btnControlSave.setBorder(null);
+        btnControlSave.setPreferredSize(new java.awt.Dimension(115, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 2, 0);
+        pnlSideControls.add(btnControlSave, gridBagConstraints);
+
+        btnControlSearch1.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 16)); // NOI18N
+        btnControlSearch1.setText("Search");
+        btnControlSearch1.setToolTipText("");
+        btnControlSearch1.setBorder(null);
+        btnControlSearch1.setPreferredSize(new java.awt.Dimension(115, 30));
+        btnControlSearch1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnControlSearch1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 2, 5);
+        pnlSideControls.add(btnControlSearch1, gridBagConstraints);
+
+        pnlControlConsole.setBackground(new java.awt.Color(31, 31, 31));
+        pnlControlConsole.setPreferredSize(new java.awt.Dimension(329, 30));
+        pnlControlConsole.setLayout(new java.awt.BorderLayout());
+
+        lblControlConsole.setForeground(new java.awt.Color(183, 183, 183));
+        lblControlConsole.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblControlConsole.setText("Welcome!");
+        pnlControlConsole.add(lblControlConsole, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 4);
+        pnlSideControls.add(pnlControlConsole, gridBagConstraints);
+
+        pnlControlMajotButtons.setBackground(new java.awt.Color(0, 0, 0));
+        pnlControlMajotButtons.setPreferredSize(new java.awt.Dimension(454, 60));
+        pnlControlMajotButtons.setLayout(new java.awt.BorderLayout(10, 0));
+
+        btnControlLeftButton.setBackground(new java.awt.Color(230, 70, 59));
+        btnControlLeftButton.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 20)); // NOI18N
+        btnControlLeftButton.setForeground(new java.awt.Color(255, 255, 255));
+        btnControlLeftButton.setText("Clear All");
+        btnControlLeftButton.setBorder(null);
+        btnControlLeftButton.setPreferredSize(new java.awt.Dimension(130, 60));
+        pnlControlMajotButtons.add(btnControlLeftButton, java.awt.BorderLayout.WEST);
+
+        btnControlRightButton.setBackground(new java.awt.Color(35, 166, 95));
+        btnControlRightButton.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 20)); // NOI18N
+        btnControlRightButton.setForeground(new java.awt.Color(255, 255, 255));
+        btnControlRightButton.setText("Place Order");
+        btnControlRightButton.setBorder(null);
+        btnControlRightButton.setPreferredSize(new java.awt.Dimension(130, 60));
+        pnlControlMajotButtons.add(btnControlRightButton, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        pnlSideControls.add(pnlControlMajotButtons, gridBagConstraints);
+
+        pnlSide.add(pnlSideControls, java.awt.BorderLayout.SOUTH);
+
+        pnlSideTable.setBackground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout pnlSideTableLayout = new javax.swing.GroupLayout(pnlSideTable);
+        pnlSideTable.setLayout(pnlSideTableLayout);
+        pnlSideTableLayout.setHorizontalGroup(
+            pnlSideTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 492, Short.MAX_VALUE)
+        );
+        pnlSideTableLayout.setVerticalGroup(
+            pnlSideTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 518, Short.MAX_VALUE)
+        );
+
+        pnlSide.add(pnlSideTable, java.awt.BorderLayout.CENTER);
+
         pnlRoot.add(pnlSide, java.awt.BorderLayout.WEST);
 
-        pnlCenter.setBackground(new java.awt.Color(245, 245, 245));
-        pnlCenter.setPreferredSize(new java.awt.Dimension(702, 834));
+        pnlControlMajorButtons.setBackground(new java.awt.Color(245, 245, 245));
+        pnlControlMajorButtons.setPreferredSize(new java.awt.Dimension(702, 834));
 
-        javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
-        pnlCenter.setLayout(pnlCenterLayout);
-        pnlCenterLayout.setHorizontalGroup(
-            pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnlControlMajorButtonsLayout = new javax.swing.GroupLayout(pnlControlMajorButtons);
+        pnlControlMajorButtons.setLayout(pnlControlMajorButtonsLayout);
+        pnlControlMajorButtonsLayout.setHorizontalGroup(
+            pnlControlMajorButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        pnlCenterLayout.setVerticalGroup(
-            pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlControlMajorButtonsLayout.setVerticalGroup(
+            pnlControlMajorButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 736, Short.MAX_VALUE)
         );
 
-        pnlRoot.add(pnlCenter, java.awt.BorderLayout.CENTER);
+        pnlRoot.add(pnlControlMajorButtons, java.awt.BorderLayout.CENTER);
 
         pnlNorth.setBackground(new java.awt.Color(255, 0, 0));
         pnlNorth.setPreferredSize(new java.awt.Dimension(1194, 98));
@@ -95,6 +307,26 @@ public class App extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtControlIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtControlIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtControlIDActionPerformed
+
+    private void txtControlID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtControlID1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtControlID1ActionPerformed
+
+    private void btnControlRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlRemoveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnControlRemoveActionPerformed
+
+    private void btnControlSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnControlSearchActionPerformed
+
+    private void btnControlSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlSearch1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnControlSearch1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -131,12 +363,30 @@ public class App extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnControlAdd;
+    private javax.swing.JButton btnControlLeftButton;
+    private javax.swing.JButton btnControlRemove;
+    private javax.swing.JButton btnControlRightButton;
+    private javax.swing.JButton btnControlSave;
+    private javax.swing.JButton btnControlSearch;
+    private javax.swing.JButton btnControlSearch1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel pnlCenter;
+    private javax.swing.JLabel lblControlConsole;
+    private javax.swing.JLabel lblControlID;
+    private javax.swing.JLabel lblControlID1;
     private javax.swing.JPanel pnlCenterControls;
+    private javax.swing.JPanel pnlControlConsole;
+    private javax.swing.JPanel pnlControlMajorButtons;
+    private javax.swing.JPanel pnlControlMajotButtons;
+    private javax.swing.JPanel pnlIDControl;
+    private javax.swing.JPanel pnlIDControl1;
     private javax.swing.JPanel pnlLogo;
     private javax.swing.JPanel pnlNorth;
     private javax.swing.JPanel pnlRoot;
     private javax.swing.JPanel pnlSide;
+    private javax.swing.JPanel pnlSideControls;
+    private javax.swing.JPanel pnlSideTable;
+    private javax.swing.JTextField txtControlID;
+    private javax.swing.JTextField txtControlID1;
     // End of variables declaration//GEN-END:variables
 }
