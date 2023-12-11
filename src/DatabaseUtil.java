@@ -61,12 +61,41 @@ public class DatabaseUtil {
     }
 
 
-
+    public static void updateProductName(int productId, String newName) {
+        String updateQuery = "UPDATE products SET name = ? WHERE id = ?";
+        try {
+            Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+            PreparedStatement updateStmt = con.prepareStatement(updateQuery);
+            updateStmt.setString(1, newName);
+            updateStmt.setInt(2, productId);
+            updateStmt.executeUpdate();
+            updateStmt.close();
+            con.close();
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+        }
+    }
     
+    public static void updateProductPrice(int productId, double newPrice) {
+        String updateQuery = "UPDATE products SET price = ? WHERE id = ?";
+        try {
+            Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+            PreparedStatement updateStmt = con.prepareStatement(updateQuery);
+            updateStmt.setDouble(1, newPrice);
+            updateStmt.setInt(2, productId);
+            updateStmt.executeUpdate();
+            updateStmt.close();
+            con.close();
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+        }
+    }
+
+
     public static void updateStockQuantity(int productId, int quantity) {
         // First, check if the product already has a stock record
         String checkQuery = "SELECT COUNT(*) FROM stock WHERE product_id = ?";
-        String updateQuery = "UPDATE stock SET quantity = quantity + ? WHERE product_id = ?";
+        String updateQuery = "UPDATE stock SET quantity = ? WHERE product_id = ?";
         String insertQuery = "INSERT INTO stock (product_id, quantity) VALUES (?, ?)";
         try {
             Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
@@ -76,6 +105,7 @@ public class DatabaseUtil {
             if (rs.next() && rs.getInt(1) > 0) {
                 // If record exists, update it
                 PreparedStatement updateStmt = con.prepareStatement(updateQuery);
+                System.out.println("Quantity: " + quantity);
                 updateStmt.setInt(1, quantity);
                 updateStmt.setInt(2, productId);
                 updateStmt.executeUpdate();

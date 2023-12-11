@@ -635,6 +635,8 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (isSelling) {
             saveStagingAndToggleButtons();
+        } else {
+            this.editProduct();
         }
     }//GEN-LAST:event_btnControlSaveActionPerformed
 
@@ -709,13 +711,15 @@ public class App extends javax.swing.JFrame {
         } else {
             if (!this.isManageAddMode){
                 // Enter Manage Add Mode
-                this.isManageAddMode = true;            
+                this.isManageAddMode = true;        
+                this.isManageEditMode = false;    
                 this.btnControlAdd.setText("Exit");
                 this.pnlControlText.setVisible(true);
                 this.txtControlID.setEnabled(false);
                 this.btnControlEdit.setEnabled(false);
                 this.btnControlSearch.setEnabled(false);
                 this.txtControlQty.setEnabled(true);
+                this.txtControlID.setText("0");
             } else {
                 // Exit Manage Add Mode
                 this.isManageAddMode = false;
@@ -723,7 +727,7 @@ public class App extends javax.swing.JFrame {
                 this.pnlControlText.setVisible(false);
                 this.txtControlID.setEnabled(true);
                 this.btnControlSearch.setEnabled(true);
-                this.txtControlQty.setEnabled(true);
+                this.txtControlQty.setEnabled(false);
             }
         }
     }//GEN-LAST:event_btnControlAddActionPerformed
@@ -732,7 +736,52 @@ public class App extends javax.swing.JFrame {
         if (isSelling) {
             toggleButtonsIfStagingPopulated();
         } else {
-            toggleManageEditMode();
+            if (!this.isManageEditMode){
+                // Enter Manage Edit Mode
+                this.isManageEditMode = true;
+                this.isManageAddMode = false;
+                
+                // Texts
+                this.txtControlID.setEnabled(false);
+                this.txtControlQty.setEnabled(true);
+                this.pnlControlText.setVisible(true);
+                
+                // Buttons
+                this.btnControlAdd.setEnabled(false);
+                this.btnControlEdit.setText("Exit");
+                this.btnControlSearch.setEnabled(false);
+                this.btnControlSave.setEnabled(true);
+                this.btnControlLeftButton.setEnabled(false);
+                this.btnControlRightButton.setEnabled(false);
+                
+                // Set text values based on selected row in tblData
+                int selectedRow = tblData.getSelectedRow();
+                if (selectedRow >= 0) {
+                    this.txtControlQty.setText(tblData.getValueAt(selectedRow, 3).toString());  // Assuming column 3 is the quantity column
+                    this.txtControlName.setText(tblData.getValueAt(selectedRow, 1).toString());  // Assuming column 1 is the name column
+                    this.txtControlPrice.setText(tblData.getValueAt(selectedRow, 2).toString()); // Assuming column 2 is the price column
+                }
+                
+                
+            } else {
+                // Exit Manage Edit Mode
+                this.isManageEditMode = false;
+                
+                // Texts
+                this.txtControlID.setEnabled(true);
+                this.txtControlQty.setEnabled(false);
+                this.txtControlQty.setText("0");
+                this.pnlControlText.setVisible(false);
+                
+                // Buttons
+                this.btnControlAdd.setEnabled(true);
+                this.btnControlSearch.setEnabled(true);
+                this.btnControlEdit.setText("Edit");
+                this.btnControlSave.setEnabled(false);
+                this.btnControlEdit.setEnabled(false);
+                this.btnControlLeftButton.setEnabled(true);
+                this.btnControlRightButton.setEnabled(true);
+            }
         }
     }//GEN-LAST:event_btnControlEditActionPerformed
 
@@ -1054,10 +1103,6 @@ public class App extends javax.swing.JFrame {
            }
         }
     } //QA'ed
-    
-    private void toggleManageEditMode(){
-        
-    }
 
     private void removeRowFromStaging() {
         // Get the model of tblStaging
@@ -1269,6 +1314,52 @@ public class App extends javax.swing.JFrame {
         this.txtControlID.setEnabled(true);
         this.btnControlSearch.setEnabled(true);
         this.txtControlQty.setEnabled(false);
+    }
+
+    public void editProduct() {
+        // Get data from controls
+        int productId = Integer.parseInt(txtControlID.getText());
+        String productName = txtControlName.getText();
+        double productPrice = Double.parseDouble(txtControlPrice.getText());
+        int productQuantity = Integer.parseInt(txtControlQty.getText());
+
+        // Update the product in the database
+        DatabaseUtil.updateProductName(productId, productName);
+        DatabaseUtil.updateProductPrice(productId, productPrice);
+        DatabaseUtil.updateStockQuantity(productId, productQuantity);
+
+        // Update the row in the table model
+        DefaultTableModel model = (DefaultTableModel) tblData.getModel();
+        int rowCount = model.getRowCount();
+
+        for (int i = 0; i < rowCount; i++) {
+            if ((int) model.getValueAt(i, 0) == productId) {
+                model.setValueAt(productName, i, 1);
+                model.setValueAt(String.format("%.2f", productPrice), i, 2);
+                model.setValueAt(productQuantity, i, 3);
+                break;
+            }
+        }
+
+        // Reset controls
+        txtControlID.setText("0");
+        txtControlName.setText("");
+        txtControlPrice.setText("0");
+        txtControlQty.setText("0");
+
+        
+        // Exit Manage Edit Mode
+        this.isManageEditMode = false;
+        this.txtControlID.setEnabled(true);
+        this.txtControlQty.setEnabled(false);
+        this.pnlControlText.setVisible(false);
+        this.btnControlAdd.setEnabled(true);
+        this.btnControlSearch.setEnabled(true);
+        this.btnControlEdit.setText("Edit");
+        this.btnControlSave.setEnabled(false);
+        this.btnControlEdit.setEnabled(false);
+        this.btnControlLeftButton.setEnabled(true);
+        this.btnControlRightButton.setEnabled(true);
     }
 
     
