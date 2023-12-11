@@ -872,12 +872,14 @@ public class App extends javax.swing.JFrame {
 
         for (int i = 0; i < modelData.getRowCount(); i++) {
             String idInRow = modelData.getValueAt(i, 0).toString(); // Get the ID in the row
-            String nameInRow = modelData.getValueAt(i, 1).toString(); // Get the name in the row
+            
+            System.out.println("Searching: " + idToSearch);
 
-            if (idInRow.equals(idToSearch) || nameInRow.toLowerCase().contains(nameToSearch.toLowerCase())) {
+            if (idInRow.equals(idToSearch)) {
                 // If the ID in the row matches the ID to search, or the name in the row contains the name to search, select the row
                 tblData.setRowSelectionInterval(i, i);
 
+                System.out.println("Found");
                 // Scroll to the searched row
                 Rectangle rect = tblData.getCellRect(i, 0, true);
                 tblData.scrollRectToVisible(rect);
