@@ -22,6 +22,8 @@ import javax.swing.JOptionPane;
 
 public class App extends javax.swing.JFrame {
     private boolean isSelling = true;
+    private boolean isEditing = false;
+    private boolean hasUpdates = false;
 
     
     static {
@@ -660,10 +662,14 @@ public class App extends javax.swing.JFrame {
 
     private void btnControlRightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlRightButtonActionPerformed
         if(isSelling){    
-            decreaseQuantityInDataBasedOnStaging();
+            this.decreaseQuantityInDataBasedOnStaging();
+            this.clearStagingTableIfSelling();
+            this.showMessageDialogue("Ordered!");
+            this.btnControlEdit.setEnabled(false);
+            
         } if(!isSelling){
-            stockItem();
-            addProduct();
+            this.stockItem();
+            this.addProduct();
         }
             
     }//GEN-LAST:event_btnControlRightButtonActionPerformed
@@ -680,11 +686,14 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_btnControlLeftButtonActionPerformed
 
     private void btnControlAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlAddActionPerformed
-        // TODO add your handling code here:
+        // Selling Mode
         if (isSelling) {
             addSelectedRowToTblStaging();
             updateStagingTotalAmount();
-        } if(!isSelling){
+        }
+        
+        // Manage Mode
+        else {
              txtControlID.setEnabled(false);
         }
     }//GEN-LAST:event_btnControlAddActionPerformed
@@ -861,7 +870,7 @@ public class App extends javax.swing.JFrame {
         applyTblDataStyle(tblStaging);
 
         // Clear lblStagingTotalAmount
-        lblStagingTotalAmount.setText("0.00");
+        lblStagingTotalAmount.setText(String.format("PHP %.2f", 0.0));
     }
 
     private void searchInTblDataSell() {
@@ -891,7 +900,7 @@ public class App extends javax.swing.JFrame {
                 break; // Exit the loop as we've found the ID or name to search
             }    
         }
-    }
+    } // QA'ed
 
     private void searchInTblDataManage() {
         String idToSearch = txtControlID.getText(); // Get the ID to search from the text field
@@ -923,10 +932,14 @@ public class App extends javax.swing.JFrame {
 
 
 
-    private void addSelectedRowToTblStaging() { // QA'ed
-
+    private void addSelectedRowToTblStaging() {
         DefaultTableModel modelData = (DefaultTableModel) tblData.getModel();
         DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+        
+        // Autoselect item to add when in editing mode
+        if (isEditing){
+            searchInTblDataSell();
+        }
 
         int selectedRow = tblData.getSelectedRow(); // Get the selected row
         int id = Integer.parseInt(modelData.getValueAt(selectedRow, 0).toString()); // Get the ID in the selected row
@@ -934,7 +947,7 @@ public class App extends javax.swing.JFrame {
         double price = Double.parseDouble(modelData.getValueAt(selectedRow, 2).toString()); // Get the price in the selected row
         int qty = Integer.parseInt(txtControlQty.getText()); // Get the quantity from txtControlID1
         
-        if (qty == 0){
+        if (qty == 0 && !isEditing){
             this.showMessageDialogue("Please input how many drinks the customer would like to order.");
             return;
         }
@@ -948,8 +961,11 @@ public class App extends javax.swing.JFrame {
                 break;
             }
         }
+        
+        
 
         if (isAlreadyInStaging) {
+            
             // If the item is already in the staging table, update the quantity
             for (int i = 0; i < modelStaging.getRowCount(); i++) {
                 int idInStaging = Integer.parseInt(modelStaging.getValueAt(i, 0).toString()); // Get the ID in the row
@@ -962,7 +978,9 @@ public class App extends javax.swing.JFrame {
             }
         } else {
             // If the item is not yet in the staging table, add it
-            modelStaging.addRow(new Object[]{id, name, String.format("%.2f", price), qty, String.format("%.2f", price * qty )});
+            if(!isEditing){
+                modelStaging.addRow(new Object[]{id, name, String.format("%.2f", price), qty, String.format("%.2f", price * qty )});
+            }
         }
         
         // Enable btnControlRemove, btnControlEdit, and btnControlSave if tblStaging is populated
@@ -974,9 +992,12 @@ public class App extends javax.swing.JFrame {
         txtControlID.setText("0");
         txtControlQty.setText("0");
         txtControlName.setText("");
-        btnControlAdd.setEnabled(false);
-        txtControlQty.setEnabled(false);
-    }
+        
+        if(!isEditing){
+            btnControlAdd.setEnabled(false);
+            txtControlQty.setEnabled(false);
+        }
+    } // QA'ed
 
     private void enableButtonsIfStagingPopulated() {
         // Get the model of tblStaging
@@ -984,12 +1005,22 @@ public class App extends javax.swing.JFrame {
 
         // Check if tblStaging is populated
         if (modelStaging.getRowCount() > 0) {
-            // If tblStaging is populated, enable btnControlRemove, btnControlEdit, and btnControlSave
-            btnControlRemove.setEnabled(true);
-            btnControlEdit.setEnabled(true);
-            btnControlSave.setEnabled(true);
-            txtControlQty.setEnabled(true);
-            btnControlSearch.setEnabled(false);
+           if(!isEditing){
+                this.isEditing = true;
+                btnControlEdit.setText("Exit");
+                btnControlAdd.setEnabled(true);
+                btnControlRemove.setEnabled(true);
+                txtControlQty.setEnabled(true);
+                btnControlSearch.setEnabled(false);
+           } else {
+                this.isEditing = false;
+                btnControlEdit.setText("Edit");
+                btnControlAdd.setEnabled(false);
+                btnControlRemove.setEnabled(false);
+                txtControlQty.setEnabled(false);
+                btnControlSearch.setEnabled(true);
+               
+           }
         }
     }
 
@@ -1040,14 +1071,11 @@ public class App extends javax.swing.JFrame {
         modelStaging.setValueAt(String.format("%.2f", totalAmount), modelStaging.getRowCount() - 1, 4);
 
         // Update the total amount in lblStagingTotalAmount
-        lblStagingTotalAmount.setText(String.format("%.2f", totalAmount));
+        lblStagingTotalAmount.setText(String.format("PHP %.2f", 0.0));
     }
 
 
     private void saveStagingAndToggleButtons() {
-        // Save tblStaging
-        DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
-
         // Disable btnControlRemove
         btnControlRemove.setEnabled(false);
 
