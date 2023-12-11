@@ -4,7 +4,6 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,7 +23,7 @@ public class DatabaseUtil {
                 model.addRow(new Object[]{
                     resultSet.getInt("ProductID"),
                     resultSet.getString("ProductName"),
-                    convertToCurrency(resultSet.getDouble("Price")),
+                    String.format("%.2f", resultSet.getDouble("Price")),
                     resultSet.getInt("StockQuantity")
                 });
             }
@@ -104,11 +103,6 @@ public class DatabaseUtil {
 
 
     // Helper Methods
-    
-    private static String convertToCurrency(double data) {
-        DecimalFormat df = new DecimalFormat("#,##0.##");
-        return df.format(data);
-    }
     
     private static ResultSet sendPreparedStatementQuery(String query) {
         try {
