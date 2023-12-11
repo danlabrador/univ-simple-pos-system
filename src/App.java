@@ -18,6 +18,7 @@ import style.CenterAlignCellRenderer;
 import style.BoldFontRenderer;
 
 import java.awt.Rectangle;
+import javax.swing.JOptionPane;
 
 public class App extends javax.swing.JFrame {
     private boolean isSelling = true;
@@ -932,6 +933,7 @@ public class App extends javax.swing.JFrame {
         int qty = Integer.parseInt(txtControlQty.getText()); // Get the quantity from txtControlID1
         
         if (qty == 0){
+            this.showMessageDialogue("Please input how many drinks the customer would like to order.");
             return;
         }
 
@@ -1195,6 +1197,12 @@ public class App extends javax.swing.JFrame {
 
         // Re-enable txtControlID
         txtControlID.setEnabled(true);
+    }
+    
+    // Helper methods
+    
+    public void showMessageDialogue(String message){
+        JOptionPane.showMessageDialog(null, message, "The Coffee Canvas", JOptionPane.INFORMATION_MESSAGE);
     }
 
 
