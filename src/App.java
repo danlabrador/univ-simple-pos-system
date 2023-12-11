@@ -1206,19 +1206,27 @@ public class App extends javax.swing.JFrame {
         lblStagingTotalAmount.setText(String.format("PHP %.2f", total));
     } // QA'ed
 
-
     public void unstockItem() {
         // Get the ID or name from txtControlID or txtControlName
-        String idOrName = txtControlID.getText().isEmpty() ? txtControlName.getText() : txtControlID.getText();
+        String id = txtControlID.getText();
 
         // Get the quantity to unstock from txtControllerID1
         int quantityToUnstock = Integer.parseInt(txtControlQty.getText());
 
         // Scroll to the item in txtData that matches the ID or name
         for (int i = 0; i < tblData.getRowCount(); i++) {
-            if (tblData.getValueAt(i, 0).toString().equals(idOrName) || tblData.getValueAt(i, 1).toString().equals(idOrName)) {
+            if (tblData.getValueAt(i, 0).toString().equals(id) || tblData.getValueAt(i, 1).toString().equals(id)) {
                 // Subtract the quantity from the item's current quantity
                 int currentQuantity = Integer.parseInt(tblData.getValueAt(i, 3).toString()); // Changed index to 3
+
+                // Check if unstocking would result in negative quantity
+                if (currentQuantity - quantityToUnstock < 0) {
+                    // Display a message dialog
+                    this.showMessageDialogue("Cannot unstock. Negative quantity would result.");
+                    return; // Do not proceed further
+                }
+
+                // Update the quantity in the table
                 tblData.setValueAt(currentQuantity - quantityToUnstock, i, 3); // Changed index to 3
 
                 // Update the quantity in the database
@@ -1237,8 +1245,6 @@ public class App extends javax.swing.JFrame {
             }
         }
     }
-
-
 
     public void stockItem() {
         // Get the ID or name from txtControlID or txtControlName
@@ -1275,7 +1281,14 @@ public class App extends javax.swing.JFrame {
     public void addProduct() {
         // Get data from control
         String productName = txtControlName.getText();
-        double productPrice = Double.parseDouble(txtControlPrice.getText());
+        double productPrice;
+        
+        try {
+            productPrice = Double.parseDouble(txtControlPrice.getText());
+        } catch (NumberFormatException e){
+            productPrice = 0.0;
+        }
+        
         int productQuantity = Integer.parseInt(txtControlQty.getText());
 
         // Add the new product to the database

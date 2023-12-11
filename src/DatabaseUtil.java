@@ -145,6 +145,29 @@ public class DatabaseUtil {
     public static void reduceStockQuantity(int productId, int quantity) {
         addStockQuantity(productId, -quantity); // Reuse the addStockQuantity method with negative value
     }
+    
+    
+    public static void removeProductById(int productId) {
+        String deleteProductQuery = "DELETE FROM products WHERE id = ?";
+        String deleteStockQuery = "DELETE FROM stock WHERE product_id = ?";
+
+        try (Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword)) {
+            // Delete product from the 'products' table
+            try (PreparedStatement deleteProductStmt = con.prepareStatement(deleteProductQuery)) {
+                deleteProductStmt.setInt(1, productId);
+                deleteProductStmt.executeUpdate();
+            }
+
+            // Delete related stock entries from the 'stock' table
+            try (PreparedStatement deleteStockStmt = con.prepareStatement(deleteStockQuery)) {
+                deleteStockStmt.setInt(1, productId);
+                deleteStockStmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+        }
+    }
+
 
 
     // Helper Methods
