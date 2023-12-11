@@ -7,6 +7,8 @@ import java.awt.Component;
 import java.awt.Toolkit;
 import java.text.DecimalFormat;
 import java.util.Random;
+import java.util.Vector;
+
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -20,6 +22,8 @@ import javax.swing.table.TableCellRenderer;
 import style.CenterAlignCellRenderer;
 import style.BoldFontRenderer;
 import style.TestData;
+
+import java.awt.Rectangle;
 
 public class App extends javax.swing.JFrame {
     private boolean isSelling = true;
@@ -47,7 +51,6 @@ public class App extends javax.swing.JFrame {
         applyTblDataStyle(tblData);
         DatabaseUtil.populateTblData(tblData);
         applyTblStagingStyle(tblStaging);
-        TestData.populateTblStaging(tblStaging);
     }
 
     
@@ -67,11 +70,12 @@ public class App extends javax.swing.JFrame {
         txtControlID1 = new javax.swing.JTextField();
         btnControlAdd = new javax.swing.JButton();
         btnControlRemove = new javax.swing.JButton();
-        btnControlSearch = new javax.swing.JButton();
         btnControlSave = new javax.swing.JButton();
-        btnControlSearch1 = new javax.swing.JButton();
+        btnControlEdit = new javax.swing.JButton();
+        btnControlSearch = new javax.swing.JButton();
         pnlControlConsole = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        txtControlName = new javax.swing.JTextField();
+        txtControlPrice = new javax.swing.JTextField();
         pnlControlMajotButtons = new javax.swing.JPanel();
         btnControlLeftButton = new javax.swing.JButton();
         btnControlRightButton = new javax.swing.JButton();
@@ -183,6 +187,11 @@ public class App extends javax.swing.JFrame {
         btnControlAdd.setBorder(null);
         btnControlAdd.setEnabled(false);
         btnControlAdd.setPreferredSize(new java.awt.Dimension(115, 30));
+        btnControlAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnControlAddActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
         pnlSideControls.add(btnControlAdd, gridBagConstraints);
@@ -202,11 +211,43 @@ public class App extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 0);
         pnlSideControls.add(btnControlRemove, gridBagConstraints);
 
+        btnControlSave.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 16)); // NOI18N
+        btnControlSave.setText("Save");
+        btnControlSave.setToolTipText("");
+        btnControlSave.setBorder(null);
+        btnControlSave.setEnabled(false);
+        btnControlSave.setPreferredSize(new java.awt.Dimension(115, 30));
+        btnControlSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnControlSaveActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(6, 5, 2, 1);
+        pnlSideControls.add(btnControlSave, gridBagConstraints);
+
+        btnControlEdit.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 16)); // NOI18N
+        btnControlEdit.setText("Edit");
+        btnControlEdit.setBorder(null);
+        btnControlEdit.setEnabled(false);
+        btnControlEdit.setPreferredSize(new java.awt.Dimension(115, 30));
+        btnControlEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnControlEditActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 2, 0);
+        pnlSideControls.add(btnControlEdit, gridBagConstraints);
+
         btnControlSearch.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 16)); // NOI18N
-        btnControlSearch.setText("Save");
+        btnControlSearch.setText("Search");
         btnControlSearch.setToolTipText("");
         btnControlSearch.setBorder(null);
-        btnControlSearch.setEnabled(false);
         btnControlSearch.setPreferredSize(new java.awt.Dimension(115, 30));
         btnControlSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,50 +255,30 @@ public class App extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.insets = new java.awt.Insets(6, 5, 2, 1);
-        pnlSideControls.add(btnControlSearch, gridBagConstraints);
-
-        btnControlSave.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 16)); // NOI18N
-        btnControlSave.setText("Edit");
-        btnControlSave.setBorder(null);
-        btnControlSave.setEnabled(false);
-        btnControlSave.setPreferredSize(new java.awt.Dimension(115, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 2, 0);
-        pnlSideControls.add(btnControlSave, gridBagConstraints);
-
-        btnControlSearch1.setFont(new java.awt.Font("Gilroy-ExtraBold", 0, 16)); // NOI18N
-        btnControlSearch1.setText("Search");
-        btnControlSearch1.setToolTipText("");
-        btnControlSearch1.setBorder(null);
-        btnControlSearch1.setPreferredSize(new java.awt.Dimension(115, 30));
-        btnControlSearch1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnControlSearch1ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 2, 5);
-        pnlSideControls.add(btnControlSearch1, gridBagConstraints);
+        pnlSideControls.add(btnControlSearch, gridBagConstraints);
 
         pnlControlConsole.setBackground(new java.awt.Color(31, 31, 31));
         pnlControlConsole.setPreferredSize(new java.awt.Dimension(329, 30));
-        pnlControlConsole.setLayout(new java.awt.BorderLayout());
 
-        jTextField1.setBackground(new java.awt.Color(31, 31, 31));
-        jTextField1.setFont(new java.awt.Font("Gilroy-Regular", 0, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("Welcome!");
-        jTextField1.setBorder(null);
-        jTextField1.setEnabled(false);
-        pnlControlConsole.add(jTextField1, java.awt.BorderLayout.CENTER);
+        txtControlName.setBackground(new java.awt.Color(31, 31, 31));
+        txtControlName.setFont(new java.awt.Font("Gilroy-Regular", 0, 12)); // NOI18N
+        txtControlName.setForeground(new java.awt.Color(255, 255, 255));
+        txtControlName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtControlName.setText("Welcome!");
+        txtControlName.setBorder(null);
+        txtControlName.setEnabled(false);
+        txtControlName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtControlNameActionPerformed(evt);
+            }
+        });
+        pnlControlConsole.add(txtControlName);
+
+        txtControlPrice.setText("jTextField2");
+        pnlControlConsole.add(txtControlPrice);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -276,6 +297,11 @@ public class App extends javax.swing.JFrame {
         btnControlLeftButton.setText("Clear All");
         btnControlLeftButton.setBorder(null);
         btnControlLeftButton.setPreferredSize(new java.awt.Dimension(130, 60));
+        btnControlLeftButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnControlLeftButtonActionPerformed(evt);
+            }
+        });
         pnlControlMajotButtons.add(btnControlLeftButton, java.awt.BorderLayout.WEST);
 
         btnControlRightButton.setBackground(new java.awt.Color(35, 166, 95));
@@ -284,6 +310,11 @@ public class App extends javax.swing.JFrame {
         btnControlRightButton.setText("Place Order");
         btnControlRightButton.setBorder(null);
         btnControlRightButton.setPreferredSize(new java.awt.Dimension(130, 60));
+        btnControlRightButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnControlRightButtonActionPerformed(evt);
+            }
+        });
         pnlControlMajotButtons.add(btnControlRightButton, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -296,19 +327,11 @@ public class App extends javax.swing.JFrame {
         pnlSide.add(pnlSideControls, java.awt.BorderLayout.SOUTH);
 
         crzypnlStaging.setBackground(new java.awt.Color(0, 0, 0));
-        crzypnlStaging.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
-            "",
-            new String[]{
-                ""
-            }
-        ));
         crzypnlStaging.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "wrap,fill,insets 20 20 0 20,gapy 20",
             "[fill]",
             "[fill][grow 0]",
-            new String[]{
-                ""
-            }
+            null
         ));
 
         tblStaging.setBackground(new java.awt.Color(31, 31, 31));
@@ -337,6 +360,7 @@ public class App extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblStaging.setPreferredSize(new java.awt.Dimension(433, 446));
         tblStaging.setRowHeight(40);
         scrollStaging.setViewportView(tblStaging);
         if (tblStaging.getColumnModel().getColumnCount() > 0) {
@@ -394,7 +418,7 @@ public class App extends javax.swing.JFrame {
 
         crzypnlStaging.add(pnlTotal);
 
-        pnlSide.add(crzypnlStaging, java.awt.BorderLayout.CENTER);
+        pnlSide.add(crzypnlStaging, java.awt.BorderLayout.PAGE_START);
 
         pnlRoot.add(pnlSide, java.awt.BorderLayout.WEST);
 
@@ -406,7 +430,7 @@ public class App extends javax.swing.JFrame {
         pnlLogo.setPreferredSize(new java.awt.Dimension(492, 98));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Dan Labrador\\OneDrive - addu.edu.ph\\Documents\\CS 2136\\7 GUI\\univ-simple-pos-system\\src\\resources\\img\\logo.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/img/logo.png"))); // NOI18N
         jLabel1.setToolTipText("");
         jLabel1.setPreferredSize(new java.awt.Dimension(480, 86));
         pnlLogo.add(jLabel1);
@@ -513,12 +537,6 @@ public class App extends javax.swing.JFrame {
         pnlRoot.add(pnlNorth, java.awt.BorderLayout.NORTH);
 
         crzypnlCenter.setBackground(new java.awt.Color(245, 245, 245));
-        crzypnlCenter.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
-            "insets 20 50 50 50,wrap,fill",
-            "[fill]",
-            "[fill]",
-            null
-        ));
         crzypnlCenter.setPreferredSize(new java.awt.Dimension(600, 502));
 
         tblData.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -595,15 +613,26 @@ public class App extends javax.swing.JFrame {
 
     private void btnControlRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlRemoveActionPerformed
         // TODO add your handling code here:
+        if (isSelling) {
+            removeRowFromStaging();
+        }
     }//GEN-LAST:event_btnControlRemoveActionPerformed
 
-    private void btnControlSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlSearchActionPerformed
+    private void btnControlSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlSaveActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnControlSearchActionPerformed
+        if (isSelling) {
+            saveStagingAndToggleButtons();
+        }
+    }//GEN-LAST:event_btnControlSaveActionPerformed
 
-    private void btnControlSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlSearch1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnControlSearch1ActionPerformed
+    private void btnControlSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlSearchActionPerformed
+        if (isSelling) {
+            txtControlName.setEnabled(true);
+            searchInTblDataSell();
+        } if(!isSelling){
+            searchInTblDataManage(); 
+        }
+    }//GEN-LAST:event_btnControlSearchActionPerformed
 
     private void btnSellTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSellTabActionPerformed
         btnSellTab.setBackground(new Color(222, 179, 137));
@@ -622,6 +651,47 @@ public class App extends javax.swing.JFrame {
         lblDisplayLocation.setText("INVENTORY      ");
         isSelling = false;
     }//GEN-LAST:event_btnManageTabActionPerformed
+
+    private void txtControlNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtControlNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtControlNameActionPerformed
+
+    private void btnControlRightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlRightButtonActionPerformed
+        if(isSelling){    
+        decreaseQuantityInDataBasedOnStaging();
+        } if(!isSelling){
+            stockItem();
+            addProduct();
+        }
+            
+    }//GEN-LAST:event_btnControlRightButtonActionPerformed
+
+    @SuppressWarnings("empty-statement")
+    private void btnControlLeftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlLeftButtonActionPerformed
+        // TODO add your handling code here:
+        if (isSelling) {
+            clearStagingTableIfSelling();
+        } if(!isSelling) {
+            txtControlID1.setEnabled(true);
+            unstockItem();
+        }
+    }//GEN-LAST:event_btnControlLeftButtonActionPerformed
+
+    private void btnControlAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlAddActionPerformed
+        // TODO add your handling code here:
+        if (isSelling) {
+        addSelectedRowToTblStaging();
+        updateStagingTotalAmount();
+        } if(!isSelling){
+             txtControlID.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnControlAddActionPerformed
+
+    private void btnControlEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlEditActionPerformed
+        if (isSelling) {
+            enableButtonsIfStagingPopulated();
+        }
+    }//GEN-LAST:event_btnControlEditActionPerformed
 
     private TableCellRenderer getTblDataAlignmentCellRender(TableCellRenderer oldRender, boolean header) {
         return new DefaultTableCellRenderer() {
@@ -742,18 +812,17 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel Spacing1;
     private javax.swing.JPanel Spacing2;
     private javax.swing.JButton btnControlAdd;
+    private javax.swing.JButton btnControlEdit;
     private javax.swing.JButton btnControlLeftButton;
     private javax.swing.JButton btnControlRemove;
     private javax.swing.JButton btnControlRightButton;
     private javax.swing.JButton btnControlSave;
     private javax.swing.JButton btnControlSearch;
-    private javax.swing.JButton btnControlSearch1;
     private javax.swing.JButton btnManageTab;
     private javax.swing.JButton btnSellTab;
     private raven.crazypanel.CrazyPanel crzypnlCenter;
     private raven.crazypanel.CrazyPanel crzypnlStaging;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblControlID;
     private javax.swing.JLabel lblControlID1;
     private javax.swing.JLabel lblDisplayLocation;
@@ -778,5 +847,357 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JTable tblStaging;
     private javax.swing.JTextField txtControlID;
     private javax.swing.JTextField txtControlID1;
+    private javax.swing.JTextField txtControlName;
+    private javax.swing.JTextField txtControlPrice;
     // End of variables declaration//GEN-END:variables
+//my code starts here
+
+private void clearStagingTableIfSelling() {
+    DefaultTableModel model = (DefaultTableModel) tblStaging.getModel();
+    model.setRowCount(0);
+    applyTblDataStyle(tblStaging);
+
+    // Clear lblStagingTotalAmount
+    lblStagingTotalAmount.setText("0.00");
+}
+
+private void searchInTblDataSell() {
+    String idToSearch = txtControlID.getText(); // Get the ID to search from the text field
+    String nameToSearch = txtControlName.getText(); // Get the name to search from the text field
+
+    DefaultTableModel modelData = (DefaultTableModel) tblData.getModel();
+
+    for (int i = 0; i < modelData.getRowCount(); i++) {
+        String idInRow = modelData.getValueAt(i, 0).toString(); // Get the ID in the row
+        String nameInRow = modelData.getValueAt(i, 1).toString(); // Get the name in the row
+
+        if (idInRow.equals(idToSearch) || nameInRow.toLowerCase().contains(nameToSearch.toLowerCase())) {
+            // If the ID in the row matches the ID to search, or the name in the row contains the name to search, select the row
+            tblData.setRowSelectionInterval(i, i);
+
+            // Scroll to the searched row
+            Rectangle rect = tblData.getCellRect(i, 0, true);
+            tblData.scrollRectToVisible(rect);
+
+            // Enable the "Add" button and the "txtControlID1" JTextField
+            btnControlAdd.setEnabled(true);
+            txtControlID1.setEnabled(true);
+
+            break; // Exit the loop as we've found the ID or name to search
+        }    
+    }
+}
+
+    private void searchInTblDataManage() {
+        String idToSearch = txtControlID.getText(); // Get the ID to search from the text field
+        String nameToSearch = txtControlName.getText(); // Get the name to search from the text field
+    
+        DefaultTableModel modelData = (DefaultTableModel) tblData.getModel();
+    
+        for (int i = 0; i < modelData.getRowCount(); i++) {
+            String idInRow = modelData.getValueAt(i, 0).toString(); // Get the ID in the row
+            String nameInRow = modelData.getValueAt(i, 1).toString(); // Get the name in the row
+    
+            if (idInRow.equals(idToSearch) || nameInRow.equals(nameToSearch)) {
+                // If the ID or name in the row matches the ID or name to search, select the row
+                tblData.setRowSelectionInterval(i, i);
+    
+                // Scroll to the searched row
+                Rectangle rect = tblData.getCellRect(i, 0, true);
+                tblData.scrollRectToVisible(rect);
+    
+                // Enable the "Add" button and the "txtControlID1" JTextField
+                txtControlID1.setEnabled(true);
+                txtControlName.setEnabled(true);
+                btnControlAdd.setEnabled(true);
+    
+                break; // Exit the loop as we've found the ID or name to search
+            }    
+        }
+    }
+
+
+
+private void addSelectedRowToTblStaging() {
+
+        DefaultTableModel modelData = (DefaultTableModel) tblData.getModel();
+        DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+
+        int selectedRow = tblData.getSelectedRow(); // Get the selected row
+        int id = Integer.parseInt(modelData.getValueAt(selectedRow, 0).toString()); // Get the ID in the selected row
+        String name = modelData.getValueAt(selectedRow, 1).toString(); // Get the name in the selected row
+        double price = Double.parseDouble(modelData.getValueAt(selectedRow, 2).toString()); // Get the price in the selected row
+        int qty = Integer.parseInt(txtControlID1.getText()); // Get the quantity from txtControlID1
+
+        // Check if the item is already in the staging table
+        boolean isAlreadyInStaging = false;
+        for (int i = 0; i < modelStaging.getRowCount(); i++) {
+            int idInStaging = Integer.parseInt(modelStaging.getValueAt(i, 0).toString()); // Get the ID in the row
+            if (idInStaging == id) {
+                isAlreadyInStaging = true;
+                break;
+            }
+        }
+
+        if (isAlreadyInStaging) {
+            // If the item is already in the staging table, update the quantity
+            for (int i = 0; i < modelStaging.getRowCount(); i++) {
+                int idInStaging = Integer.parseInt(modelStaging.getValueAt(i, 0).toString()); // Get the ID in the row
+                if (idInStaging == id) {
+                    int qtyInStaging = Integer.parseInt(modelStaging.getValueAt(i, 3).toString()); // Get the quantity in the row
+                    modelStaging.setValueAt(qtyInStaging + qty, i, 3); // Update the quantity
+                    modelStaging.setValueAt((qtyInStaging + qty) * price, i, 4); // Update the total
+                    break;
+                }
+            }
+        } else {
+            // If the item is not yet in the staging table, add it
+            modelStaging.addRow(new Object[]{id, name, price, qty, price * qty});
+        }
+
+        // Update the total
+        double total = 0;
+        for (int i = 0; i < modelStaging.getRowCount(); i++) {
+            double totalInStaging = Double.parseDouble(modelStaging.getValueAt(i, 4).toString()); // Get the total in the row
+            total += totalInStaging;
+        }
+
+        // Enable btnControlRemove, btnControlEdit, and btnControlSave if tblStaging is populated
+        if (modelStaging.getRowCount() > 0) {
+            btnControlEdit.setEnabled(true);
+        }
+
+        // Reset txtControlID and txtControlID1 to 0 and disable buttonControlAdd and txtControlID1
+        txtControlID.setText("0");
+        txtControlID1.setText("0");
+        txtControlName.setText("");
+        btnControlAdd.setEnabled(false);
+        txtControlID1.setEnabled(false);
+}
+
+private void enableButtonsIfStagingPopulated() {
+    // Get the model of tblStaging
+    DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+
+    // Check if tblStaging is populated
+    if (modelStaging.getRowCount() > 0) {
+        // If tblStaging is populated, enable btnControlRemove, btnControlEdit, and btnControlSave
+        btnControlRemove.setEnabled(true);
+        btnControlEdit.setEnabled(true);
+        btnControlSave.setEnabled(true);
+        txtControlID1.setEnabled(true);
+        btnControlSearch.setEnabled(false);
+    }
+}
+
+private void removeRowFromStaging() {
+    // Get the model of tblStaging
+    DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+
+    // Get the ID or name to remove from txtControlID or txtControlName
+    String idOrNameToRemove = txtControlID.getText().isEmpty() ? txtControlName.getText() : txtControlID.getText();
+
+    // Get the quantity to remove from txtControlID1
+    int qtyToRemove = Integer.parseInt(txtControlID1.getText());
+
+    double totalAmount = 0.0;
+
+    for (int i = modelStaging.getRowCount() - 1; i >= 0; i--) {
+        String idInRow = modelStaging.getValueAt(i, 0).toString(); // Get the ID in the row
+        String nameInRow = modelStaging.getValueAt(i, 1).toString(); // Get the name in the row
+
+        int qtyInRow = Integer.parseInt(modelStaging.getValueAt(i, 3).toString()); // Get the quantity in the row
+
+        if (idInRow.equals(idOrNameToRemove) || nameInRow.toLowerCase().startsWith(idOrNameToRemove.toLowerCase())) {
+            // If the ID in the row matches the ID to remove, or the name in the row starts with the name to remove, decrease the quantity
+
+            if (qtyInRow > qtyToRemove) {
+                // If the quantity in the row is greater than the quantity to remove, decrease the quantity
+                modelStaging.setValueAt(qtyInRow - qtyToRemove, i, 3);
+                qtyInRow -= qtyToRemove; // Update qtyInRow after decreasing the quantity
+            } else {
+                // If the quantity in the row is less than or equal to the quantity to remove, remove the row
+                modelStaging.removeRow(i);
+                continue; // Skip the rest of the loop for this iteration
+            }
+
+            // Reset txtControlID, txtControlName and txtControlID1 to "0"
+            txtControlID.setText("0");
+            txtControlName.setText("");
+            txtControlID1.setText("0");
+        }
+
+        // Calculate the total amount
+        double priceInRow = Double.parseDouble(modelStaging.getValueAt(i, 2).toString()); // Get the price in the row
+        totalAmount += priceInRow * qtyInRow;
+    }
+
+    // Update the total price in the 5th column of tblStaging
+    // Assuming the last row of the table is reserved for displaying the total price
+    modelStaging.setValueAt(String.format("%.2f", totalAmount), modelStaging.getRowCount() - 1, 4);
+
+    // Update the total amount in lblStagingTotalAmount
+    lblStagingTotalAmount.setText(String.format("%.2f", totalAmount));
+}
+
+
+private void saveStagingAndToggleButtons() {
+    // Save tblStaging
+    DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+
+    // Disable btnControlRemove
+    btnControlRemove.setEnabled(false);
+
+    // Enable btnControlSearch
+    btnControlSearch.setEnabled(true);
+}
+
+private void decreaseQuantityInDataBasedOnStaging() {
+        // Get the models of tblData and tblStaging
+        DefaultTableModel modelData = (DefaultTableModel) tblData.getModel();
+        DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+
+        // Iterate over the rows in tblStaging
+        for (int i = 0; i < modelStaging.getRowCount(); i++) {
+            int idInStaging = Integer.parseInt(modelStaging.getValueAt(i, 0).toString()); // Get the ID in the row
+            int qtyInStaging = Integer.parseInt(modelStaging.getValueAt(i, 3).toString()); // Get the quantity in the row
+
+            // Iterate over the rows in tblData
+            for (int j = 0; j < modelData.getRowCount(); j++) {
+                int idInData = Integer.parseInt(modelData.getValueAt(j, 0).toString()); // Get the ID in the row
+
+                if (idInData == idInStaging) {
+                    // If the ID in tblData matches the ID in tblStaging, decrease the quantity in tblData
+                    int qtyInData = Integer.parseInt(modelData.getValueAt(j, 3).toString()); // Get the quantity in the row
+                    modelData.setValueAt(qtyInData - qtyInStaging, j, 3); // Update the quantity
+
+                    // Update the quantity in the database
+                    DatabaseUtil.reduceStockQuantity(idInData, qtyInStaging);
+
+                    break; // Exit the loop as we've found the ID to update
+                }
+            }
+        }
+    } 
+
+
+private void updateStagingTotalAmount() {
+    // Get the model of tblStaging
+    DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+
+    // Update the total
+    double total = 0;
+    for (int i = 0; i < modelStaging.getRowCount(); i++) {
+        double totalInStaging = Double.parseDouble(modelStaging.getValueAt(i, 4).toString()); // Get the total in the row
+        total += totalInStaging;
+    }
+
+    lblStagingTotalAmount.setText(String.format("PHP %.2f", total));
+}
+
+
+public void unstockItem() {
+    // Get the ID or name from txtControlID or txtControlName
+    String idOrName = txtControlID.getText().isEmpty() ? txtControlName.getText() : txtControlID.getText();
+
+    // Get the quantity to unstock from txtControllerID1
+    int quantityToUnstock = Integer.parseInt(txtControlID1.getText());
+
+    // Scroll to the item in txtData that matches the ID or name
+    for (int i = 0; i < tblData.getRowCount(); i++) {
+        if (tblData.getValueAt(i, 0).toString().equals(idOrName) || tblData.getValueAt(i, 1).toString().equals(idOrName)) {
+            // Subtract the quantity from the item's current quantity
+            int currentQuantity = Integer.parseInt(tblData.getValueAt(i, 3).toString()); // Changed index to 3
+            tblData.setValueAt(currentQuantity - quantityToUnstock, i, 3); // Changed index to 3
+
+            // Update the quantity in the database
+            int productId = Integer.parseInt(tblData.getValueAt(i, 0).toString());
+            DatabaseUtil.reduceStockQuantity(productId, quantityToUnstock);
+
+            // Scroll to the item
+            tblData.setRowSelectionInterval(i, i);
+            tblData.scrollRectToVisible(new Rectangle(tblData.getCellRect(i, 0, true)));
+
+            // Reset txtControlID and txtControlID1 to 0
+            txtControlID.setText("0");
+            txtControlID1.setText("0");
+
+            break;
+        }
+    }
+}
+
+
+
+public void stockItem() {
+    // Get the ID or name from txtControlID or txtControlName
+    String idOrName = txtControlID.getText().isEmpty() ? txtControlName.getText() : txtControlID.getText();
+
+    // Get the quantity to stock from txtControllerID1
+    int quantityToStock = Integer.parseInt(txtControlID1.getText());
+
+    // Scroll to the item in txtData that matches the ID or name
+    for (int i = 0; i < tblData.getRowCount(); i++) {
+        if (tblData.getValueAt(i, 0).toString().equals(idOrName) || tblData.getValueAt(i, 1).toString().equals(idOrName)) {
+            // Add the quantity to the item's current quantity
+            int currentQuantity = Integer.parseInt(tblData.getValueAt(i, 3).toString());
+            tblData.setValueAt(currentQuantity + quantityToStock, i, 3);
+
+            // Update the quantity in the database
+            int productId = Integer.parseInt(tblData.getValueAt(i, 0).toString());
+            DatabaseUtil.addStockQuantity(productId, quantityToStock);
+
+            // Scroll to the item
+            tblData.setRowSelectionInterval(i, i);
+            tblData.scrollRectToVisible(new Rectangle(tblData.getCellRect(i, 0, true)));
+
+            // Reset txtControlID and txtControlID1 to 0
+            txtControlID.setText("0");
+            txtControlID1.setText("0");
+
+            break;
+        }
+    }
+}
+
+
+public void addProduct() {
+    // Get the product name from txtControlName
+    String productName = txtControlName.getText();
+
+    // Get the price from txtControlPrice
+    double productPrice = Double.parseDouble(txtControlPrice.getText());
+
+    // Get the quantity from txtControlID1
+    int quantity = Integer.parseInt(txtControlID1.getText());
+
+    // Add the new product to the database
+    DatabaseUtil.addNewProduct(productName, productPrice);
+
+    // Get the ID of the new product
+    int productId = DatabaseUtil.getLatestProductId();
+
+    // Add the initial stock quantity for the new product
+    DatabaseUtil.updateStockQuantity(productId, quantity);
+
+    // Create a new row with the product data
+    Object[] row = new Object[]{productId, productName, productPrice, quantity};
+
+    // Get the table model
+    DefaultTableModel model = (DefaultTableModel) tblData.getModel();
+
+    // Add the new row to the table model
+    model.addRow(row);
+
+    // Reset txtControlName, txtControlPrice, and txtControlID1
+    txtControlName.setText("");
+    txtControlPrice.setText("0");
+    txtControlID1.setText("0");
+
+    // Re-enable txtControlID
+    txtControlID.setEnabled(true);
+}
+
+
+
 }
