@@ -22,7 +22,9 @@ import javax.swing.JOptionPane;
 
 public class App extends javax.swing.JFrame {
     private boolean isSelling = true;
-    private boolean isEditing = false;
+    private boolean isSalesEditingMode = false;
+    private boolean isManageAddMode = false;
+    private boolean isManageEditMode = false;
     private boolean hasUpdates = false;
 
     
@@ -49,6 +51,7 @@ public class App extends javax.swing.JFrame {
         applyTblDataStyle(tblData);
         DatabaseUtil.populateTblData(tblData);
         applyTblStagingStyle(tblStaging);
+        pnlControlText.setVisible(false);
     }
 
     
@@ -71,8 +74,10 @@ public class App extends javax.swing.JFrame {
         btnControlSave = new javax.swing.JButton();
         btnControlEdit = new javax.swing.JButton();
         btnControlSearch = new javax.swing.JButton();
-        pnlControlConsole = new javax.swing.JPanel();
+        pnlControlText = new javax.swing.JPanel();
+        lblControlName = new javax.swing.JLabel();
         txtControlName = new javax.swing.JTextField();
+        lblControlPrice = new javax.swing.JLabel();
         txtControlPrice = new javax.swing.JTextField();
         pnlControlMajotButtons = new javax.swing.JPanel();
         btnControlLeftButton = new javax.swing.JButton();
@@ -258,32 +263,36 @@ public class App extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 2, 5);
         pnlSideControls.add(btnControlSearch, gridBagConstraints);
 
-        pnlControlConsole.setBackground(new java.awt.Color(31, 31, 31));
-        pnlControlConsole.setPreferredSize(new java.awt.Dimension(329, 30));
+        pnlControlText.setBackground(new java.awt.Color(31, 31, 31));
+        pnlControlText.setPreferredSize(new java.awt.Dimension(329, 30));
+        pnlControlText.setLayout(new javax.swing.BoxLayout(pnlControlText, javax.swing.BoxLayout.LINE_AXIS));
 
-        txtControlName.setBackground(new java.awt.Color(31, 31, 31));
-        txtControlName.setFont(new java.awt.Font("Gilroy-Regular", 0, 12)); // NOI18N
-        txtControlName.setForeground(new java.awt.Color(255, 255, 255));
-        txtControlName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtControlName.setText("Welcome!");
-        txtControlName.setBorder(null);
-        txtControlName.setEnabled(false);
+        lblControlName.setForeground(new java.awt.Color(255, 255, 255));
+        lblControlName.setText("  Name  ");
+        pnlControlText.add(lblControlName);
+
+        txtControlName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtControlName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
         txtControlName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtControlNameActionPerformed(evt);
             }
         });
-        pnlControlConsole.add(txtControlName);
+        pnlControlText.add(txtControlName);
 
-        txtControlPrice.setText("jTextField2");
-        pnlControlConsole.add(txtControlPrice);
+        lblControlPrice.setForeground(new java.awt.Color(255, 255, 255));
+        lblControlPrice.setText("  Price  ");
+        pnlControlText.add(lblControlPrice);
+
+        txtControlPrice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
+        pnlControlText.add(txtControlPrice);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 4);
-        pnlSideControls.add(pnlControlConsole, gridBagConstraints);
+        pnlSideControls.add(pnlControlText, gridBagConstraints);
 
         pnlControlMajotButtons.setBackground(new java.awt.Color(0, 0, 0));
         pnlControlMajotButtons.setPreferredSize(new java.awt.Dimension(454, 60));
@@ -644,7 +653,11 @@ public class App extends javax.swing.JFrame {
         btnControlLeftButton.setText("Clear All");
         btnControlRightButton.setText("Place Order");
         lblDisplayLocation.setText("MENU      ");
+        this.pnlControlText.setVisible(false);
         isSelling = true;
+        
+        // Control Access
+        this.btnControlAdd.setText("Add");
     }//GEN-LAST:event_btnSellTabActionPerformed
 
     private void btnManageTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageTabActionPerformed
@@ -654,6 +667,10 @@ public class App extends javax.swing.JFrame {
         btnControlRightButton.setText("Add to Inventory");
         lblDisplayLocation.setText("INVENTORY      ");
         isSelling = false;
+        
+        // Control access
+        this.btnControlAdd.setEnabled(true);
+        this.btnControlAdd.setText("Add New");
     }//GEN-LAST:event_btnManageTabActionPerformed
 
     private void txtControlNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtControlNameActionPerformed
@@ -664,9 +681,8 @@ public class App extends javax.swing.JFrame {
         if(isSelling){    
             this.decreaseQuantityInDataBasedOnStaging();
             this.clearStagingTableIfSelling();
-            this.showMessageDialogue("Ordered!");
             this.btnControlEdit.setEnabled(false);
-            
+            this.showMessageDialogue("Ordered!");
         } if(!isSelling){
             this.stockItem();
             this.addProduct();
@@ -690,17 +706,33 @@ public class App extends javax.swing.JFrame {
         if (isSelling) {
             addSelectedRowToTblStaging();
             updateStagingTotalAmount();
-        }
-        
-        // Manage Mode
-        else {
-             txtControlID.setEnabled(false);
+        } else {
+            if (!this.isManageAddMode){
+                // Enter Manage Add Mode
+                this.isManageAddMode = true;            
+                this.btnControlAdd.setText("Exit");
+                this.pnlControlText.setVisible(true);
+                this.txtControlID.setEnabled(false);
+                this.btnControlEdit.setEnabled(false);
+                this.btnControlSearch.setEnabled(false);
+                this.txtControlQty.setEnabled(true);
+            } else {
+                // Exit Manage Add Mode
+                this.isManageAddMode = false;
+                this.btnControlAdd.setText("Add New");
+                this.pnlControlText.setVisible(false);
+                this.txtControlID.setEnabled(true);
+                this.btnControlSearch.setEnabled(true);
+                this.txtControlQty.setEnabled(true);
+            }
         }
     }//GEN-LAST:event_btnControlAddActionPerformed
 
     private void btnControlEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlEditActionPerformed
         if (isSelling) {
-            enableButtonsIfStagingPopulated();
+            toggleButtonsIfStagingPopulated();
+        } else {
+            toggleManageEditMode();
         }
     }//GEN-LAST:event_btnControlEditActionPerformed
 
@@ -835,12 +867,14 @@ public class App extends javax.swing.JFrame {
     private raven.crazypanel.CrazyPanel crzypnlStaging;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblControlID;
+    private javax.swing.JLabel lblControlName;
+    private javax.swing.JLabel lblControlPrice;
     private javax.swing.JLabel lblControlQty;
     private javax.swing.JLabel lblDisplayLocation;
     private javax.swing.JLabel lblStagingTotalAmount;
     private javax.swing.JLabel lblStagingTotalLabel;
-    private javax.swing.JPanel pnlControlConsole;
     private javax.swing.JPanel pnlControlMajotButtons;
+    private javax.swing.JPanel pnlControlText;
     private javax.swing.JPanel pnlDisplayLocation;
     private javax.swing.JPanel pnlIDControlID;
     private javax.swing.JPanel pnlIDControlQty;
@@ -871,7 +905,7 @@ public class App extends javax.swing.JFrame {
 
         // Clear lblStagingTotalAmount
         lblStagingTotalAmount.setText(String.format("PHP %.2f", 0.0));
-    }
+    } // QA'ed
 
     private void searchInTblDataSell() {
         String idToSearch = txtControlID.getText(); // Get the ID to search from the text field
@@ -904,15 +938,13 @@ public class App extends javax.swing.JFrame {
 
     private void searchInTblDataManage() {
         String idToSearch = txtControlID.getText(); // Get the ID to search from the text field
-        String nameToSearch = txtControlName.getText(); // Get the name to search from the text field
     
         DefaultTableModel modelData = (DefaultTableModel) tblData.getModel();
     
         for (int i = 0; i < modelData.getRowCount(); i++) {
             String idInRow = modelData.getValueAt(i, 0).toString(); // Get the ID in the row
-            String nameInRow = modelData.getValueAt(i, 1).toString(); // Get the name in the row
     
-            if (idInRow.equals(idToSearch) || nameInRow.equals(nameToSearch)) {
+            if (idInRow.equals(idToSearch)) {
                 // If the ID or name in the row matches the ID or name to search, select the row
                 tblData.setRowSelectionInterval(i, i);
     
@@ -922,12 +954,12 @@ public class App extends javax.swing.JFrame {
     
                 // Enable the "Add" button and the "txtControlID1" JTextField
                 txtControlQty.setEnabled(true);
-                txtControlName.setEnabled(true);
-                btnControlAdd.setEnabled(true);
     
                 break; // Exit the loop as we've found the ID or name to search
             }    
         }
+        
+        btnControlEdit.setEnabled(true);
     }
 
 
@@ -937,7 +969,7 @@ public class App extends javax.swing.JFrame {
         DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
         
         // Autoselect item to add when in editing mode
-        if (isEditing){
+        if (isSalesEditingMode){
             searchInTblDataSell();
         }
 
@@ -947,7 +979,7 @@ public class App extends javax.swing.JFrame {
         double price = Double.parseDouble(modelData.getValueAt(selectedRow, 2).toString()); // Get the price in the selected row
         int qty = Integer.parseInt(txtControlQty.getText()); // Get the quantity from txtControlID1
         
-        if (qty == 0 && !isEditing){
+        if (qty == 0 && !isSalesEditingMode){
             this.showMessageDialogue("Please input how many drinks the customer would like to order.");
             return;
         }
@@ -961,7 +993,6 @@ public class App extends javax.swing.JFrame {
                 break;
             }
         }
-        
         
 
         if (isAlreadyInStaging) {
@@ -978,7 +1009,7 @@ public class App extends javax.swing.JFrame {
             }
         } else {
             // If the item is not yet in the staging table, add it
-            if(!isEditing){
+            if(!isSalesEditingMode){
                 modelStaging.addRow(new Object[]{id, name, String.format("%.2f", price), qty, String.format("%.2f", price * qty )});
             }
         }
@@ -993,27 +1024,27 @@ public class App extends javax.swing.JFrame {
         txtControlQty.setText("0");
         txtControlName.setText("");
         
-        if(!isEditing){
+        if(!isSalesEditingMode){
             btnControlAdd.setEnabled(false);
             txtControlQty.setEnabled(false);
         }
     } // QA'ed
 
-    private void enableButtonsIfStagingPopulated() {
+    private void toggleButtonsIfStagingPopulated() {
         // Get the model of tblStaging
         DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
 
         // Check if tblStaging is populated
         if (modelStaging.getRowCount() > 0) {
-           if(!isEditing){
-                this.isEditing = true;
+           if(!isSalesEditingMode){
+                this.isSalesEditingMode = true;
                 btnControlEdit.setText("Exit");
                 btnControlAdd.setEnabled(true);
                 btnControlRemove.setEnabled(true);
                 txtControlQty.setEnabled(true);
                 btnControlSearch.setEnabled(false);
            } else {
-                this.isEditing = false;
+                this.isSalesEditingMode = false;
                 btnControlEdit.setText("Edit");
                 btnControlAdd.setEnabled(false);
                 btnControlRemove.setEnabled(false);
@@ -1022,6 +1053,10 @@ public class App extends javax.swing.JFrame {
                
            }
         }
+    } //QA'ed
+    
+    private void toggleManageEditMode(){
+        
     }
 
     private void removeRowFromStaging() {
@@ -1072,7 +1107,7 @@ public class App extends javax.swing.JFrame {
 
         // Update the total amount in lblStagingTotalAmount
         lblStagingTotalAmount.setText(String.format("PHP %.2f", 0.0));
-    }
+    } // QA'ed
 
 
     private void saveStagingAndToggleButtons() {
@@ -1124,7 +1159,7 @@ public class App extends javax.swing.JFrame {
         }
 
         lblStagingTotalAmount.setText(String.format("PHP %.2f", total));
-    }
+    } // QA'ed
 
 
     public void unstockItem() {
@@ -1162,14 +1197,14 @@ public class App extends javax.swing.JFrame {
 
     public void stockItem() {
         // Get the ID or name from txtControlID or txtControlName
-        String idOrName = txtControlID.getText().isEmpty() ? txtControlName.getText() : txtControlID.getText();
+        String id = txtControlID.getText();
 
         // Get the quantity to stock from txtControllerID1
         int quantityToStock = Integer.parseInt(txtControlQty.getText());
 
         // Scroll to the item in txtData that matches the ID or name
         for (int i = 0; i < tblData.getRowCount(); i++) {
-            if (tblData.getValueAt(i, 0).toString().equals(idOrName) || tblData.getValueAt(i, 1).toString().equals(idOrName)) {
+            if (tblData.getValueAt(i, 0).toString().equals(id)) {
                 // Add the quantity to the item's current quantity
                 int currentQuantity = Integer.parseInt(tblData.getValueAt(i, 3).toString());
                 tblData.setValueAt(currentQuantity + quantityToStock, i, 3);
@@ -1193,26 +1228,22 @@ public class App extends javax.swing.JFrame {
 
 
     public void addProduct() {
-        // Get the product name from txtControlName
+        // Get data from control
         String productName = txtControlName.getText();
-
-        // Get the price from txtControlPrice
         double productPrice = Double.parseDouble(txtControlPrice.getText());
-
-        // Get the quantity from txtControlID1
-        int quantity = Integer.parseInt(txtControlQty.getText());
+        int productQuantity = Integer.parseInt(txtControlQty.getText());
 
         // Add the new product to the database
-        DatabaseUtil.addNewProduct(productName, productPrice);
+        Product product = DatabaseUtil.addNewProduct(productName, productPrice);
+        product.setStockQuantity(productQuantity);
 
         // Get the ID of the new product
-        int productId = DatabaseUtil.getLatestProductId();
 
         // Add the initial stock quantity for the new product
-        DatabaseUtil.updateStockQuantity(productId, quantity);
+        DatabaseUtil.updateStockQuantity(product.getId(), productQuantity);
 
         // Create a new row with the product data
-        Object[] row = new Object[]{productId, productName, productPrice, quantity};
+        Object[] row = new Object[]{product.getId(), product.getName(), String.format("%.2f", product.getPrice()), product.getStockQuantity()};
 
         // Get the table model
         DefaultTableModel model = (DefaultTableModel) tblData.getModel();
@@ -1220,14 +1251,26 @@ public class App extends javax.swing.JFrame {
         // Add the new row to the table model
         model.addRow(row);
 
+        // Scroll to the added row and select it
+        int rowCount = model.getRowCount();
+        tblData.setRowSelectionInterval(rowCount - 1, rowCount - 1);
+        Rectangle rect = tblData.getCellRect(rowCount - 1, 0, true);
+        tblData.scrollRectToVisible(rect);
+
         // Reset txtControlName, txtControlPrice, and txtControlID1
         txtControlName.setText("");
         txtControlPrice.setText("0");
         txtControlQty.setText("0");
-
-        // Re-enable txtControlID
-        txtControlID.setEnabled(true);
+        
+        // Exit Manage Add Mode
+        this.isManageAddMode = false;
+        this.btnControlAdd.setText("Add New");
+        this.pnlControlText.setVisible(false);
+        this.txtControlID.setEnabled(true);
+        this.btnControlSearch.setEnabled(true);
+        this.txtControlQty.setEnabled(false);
     }
+
     
     // Helper methods
     

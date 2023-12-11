@@ -33,20 +33,35 @@ public class DatabaseUtil {
         }
     }
     
-    public static void addNewProduct(String name, double price) {
+    public static Product addNewProduct(String name, double price) {
         String query = "INSERT INTO products (name, price) VALUES (?, ?)";
-        try {
-            Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-            PreparedStatement statement = con.prepareStatement(query);
+        try (Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+             PreparedStatement statement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
             statement.setString(1, name);
             statement.setDouble(2, price);
-            statement.executeUpdate();
-            statement.close();
-            con.close();
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating product failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int generatedId = generatedKeys.getInt(1);
+                    return new Product(generatedId, name, price);
+                } else {
+                    throw new SQLException("Creating product failed, no ID obtained.");
+                }
+            }
         } catch (SQLException e) {
             System.err.println("SQL Error: " + e.getMessage());
         }
+        return null; // Return null in case of failure
     }
+
+
+
     
     public static void updateStockQuantity(int productId, int quantity) {
         // First, check if the product already has a stock record
