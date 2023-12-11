@@ -954,7 +954,7 @@ public class App extends javax.swing.JFrame {
                 if (idInStaging == id) {
                     int qtyInStaging = Integer.parseInt(modelStaging.getValueAt(i, 3).toString()); // Get the quantity in the row
                     modelStaging.setValueAt(qtyInStaging + qty, i, 3); // Update the quantity
-                    modelStaging.setValueAt((qtyInStaging + qty) * price, i, 4); // Update the total
+                    modelStaging.setValueAt(String.format("%.2f", (qtyInStaging + qty) * price), i, 4); // Update the total
                     break;
                 }
             }
