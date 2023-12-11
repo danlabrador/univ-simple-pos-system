@@ -889,6 +889,7 @@ public class App extends javax.swing.JFrame {
     
     
     public static void main(String args[]) {
+        FontLoader.main(new String[]{});
         FlatIntelliJLaf.registerCustomDefaultsSource("style");
         FlatRobotoFont.install();
         FlatIntelliJLaf.setup();
@@ -1281,14 +1282,7 @@ public class App extends javax.swing.JFrame {
     public void addProduct() {
         // Get data from control
         String productName = txtControlName.getText();
-        double productPrice;
-        
-        try {
-            productPrice = Double.parseDouble(txtControlPrice.getText());
-        } catch (NumberFormatException e){
-            productPrice = 0.0;
-        }
-        
+        double productPrice = Double.parseDouble(txtControlPrice.getText());
         int productQuantity = Integer.parseInt(txtControlQty.getText());
 
         // Add the new product to the database
