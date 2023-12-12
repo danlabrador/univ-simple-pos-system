@@ -52,6 +52,8 @@ public class App extends javax.swing.JFrame {
         DatabaseUtil.populateTblData(this.tblData);
         this.applyTblStagingStyle(this.tblStaging);
         this.pnlControlText.setVisible(false);
+        this.lblControlPrice.setVisible(false);
+        this.txtControlPrice.setVisible(false);
     }
 
     
@@ -258,7 +260,7 @@ public class App extends javax.swing.JFrame {
         pnlControlText.setLayout(new javax.swing.BoxLayout(pnlControlText, javax.swing.BoxLayout.LINE_AXIS));
 
         lblControlName.setForeground(new java.awt.Color(255, 255, 255));
-        lblControlName.setText("  Name  ");
+        lblControlName.setText("  Customer Name  ");
         pnlControlText.add(lblControlName);
 
         txtControlName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -288,6 +290,7 @@ public class App extends javax.swing.JFrame {
         btnControlLeftButton.setForeground(new java.awt.Color(255, 255, 255));
         btnControlLeftButton.setText("Clear All");
         btnControlLeftButton.setBorder(null);
+        btnControlLeftButton.setEnabled(false);
         btnControlLeftButton.setPreferredSize(new java.awt.Dimension(130, 60));
         btnControlLeftButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,6 +304,7 @@ public class App extends javax.swing.JFrame {
         btnControlRightButton.setForeground(new java.awt.Color(255, 255, 255));
         btnControlRightButton.setText("Place Order");
         btnControlRightButton.setBorder(null);
+        btnControlRightButton.setEnabled(false);
         btnControlRightButton.setPreferredSize(new java.awt.Dimension(130, 60));
         btnControlRightButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -629,14 +633,18 @@ public class App extends javax.swing.JFrame {
     private void btnSellTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSellTabActionPerformed
         this.btnSellTab.setBackground(new Color(222, 179, 137));
         this.btnManageTab.setBackground(new Color(217, 217, 217));
-        this.btnControlLeftButton.setText("Clear All");
-        this.btnControlRightButton.setText("Place Order");
         this.lblDisplayLocation.setText("MENU      ");
         this.pnlControlText.setVisible(false);
         this.isSelling = true;
         
         // Control Access
+        this.btnControlLeftButton.setText("Clear All");
+        this.btnControlRightButton.setText("Place Order");
         this.btnControlAdd.setText("Add");
+        this.lblControlName.setText("  Customer Name  ");
+        this.lblControlPrice.setVisible(false);
+        this.txtControlPrice.setVisible(false);
+        
     }//GEN-LAST:event_btnSellTabActionPerformed
 
     private void btnManageTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageTabActionPerformed
@@ -650,14 +658,27 @@ public class App extends javax.swing.JFrame {
         // Control access
         this.btnControlAdd.setEnabled(true);
         this.btnControlAdd.setText("Add New");
+        this.lblControlName.setText("  Product Name  ");
+        this.lblControlPrice.setVisible(false);
+        this.txtControlPrice.setVisible(false);
+        this.pnlControlText.setVisible(false);
     }//GEN-LAST:event_btnManageTabActionPerformed
 
     private void btnControlRightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlRightButtonActionPerformed
         if(isSelling){    
+            if (this.txtControlName.getText().equals("")){
+                this.showMessageDialogue("Please enter a customer name.");
+                return;
+            }
+            
             this.decreaseQuantityInDataBasedOnStaging();
             this.clearStagingTableIfSelling();
             this.btnControlEdit.setEnabled(false);
             this.showMessageDialogue("Ordered!");
+            this.txtControlName.setText("");
+            this.btnControlLeftButton.setEnabled(false);
+            this.btnControlRightButton.setEnabled(false);
+            this.pnlControlText.setVisible(false);
         } if(!isSelling){
             this.stockItem();
             this.addProduct();
@@ -668,8 +689,10 @@ public class App extends javax.swing.JFrame {
     @SuppressWarnings("empty-statement")
     private void btnControlLeftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlLeftButtonActionPerformed
         // TODO add your handling code here:
-        if (this.isSelling) {
+        if (this.isSelling) {            
             this.clearStagingTableIfSelling();
+            this.btnControlLeftButton.setEnabled(false);
+            this.btnControlRightButton.setEnabled(false);
         } if(!this.isSelling) {
             this.txtControlQty.setEnabled(true);
             this.unstockItem();
@@ -885,7 +908,12 @@ public class App extends javax.swing.JFrame {
 
     private void addSelectedRowToTblStaging() {
         DefaultTableModel modelData = (DefaultTableModel) this.tblData.getModel();
-        DefaultTableModel modelStaging = (DefaultTableModel) this.Staging.getModel();
+        DefaultTableModel modelStaging = (DefaultTableModel) this.tblStaging.getModel();
+        
+        if (Integer.parseInt(this.txtControlQty.getText()) == 0){
+            this.showMessageDialogue("Pleae input product quantity.");
+            return;
+        }
         
         // Autoselect item to add when in editing mode
         if (this.isSalesEditingMode){
@@ -936,6 +964,9 @@ public class App extends javax.swing.JFrame {
         // Enable btnControlRemove, btnControlEdit, and btnControlSave if tblStaging is populated
         if (modelStaging.getRowCount() > 0) {
             this.btnControlEdit.setEnabled(true);
+            this.pnlControlText.setVisible(true);
+            this.btnControlLeftButton.setEnabled(true);
+            this.btnControlRightButton.setEnabled(true);
         }
 
         // Reset txtControlID and txtControlID1 to 0 and disable buttonControlAdd and txtControlID1
