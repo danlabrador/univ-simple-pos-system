@@ -48,10 +48,10 @@ public class App extends javax.swing.JFrame {
 
     public App() {
         initComponents();
-        applyTblDataStyle(tblData);
-        DatabaseUtil.populateTblData(tblData);
-        applyTblStagingStyle(tblStaging);
-        pnlControlText.setVisible(false);
+        this.applyTblDataStyle(this.tblData);
+        DatabaseUtil.populateTblData(this.tblData);
+        this.applyTblStagingStyle(this.tblStaging);
+        this.pnlControlText.setVisible(false);
     }
 
     
@@ -138,11 +138,6 @@ public class App extends javax.swing.JFrame {
         txtControlID.setText("0");
         txtControlID.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         txtControlID.setPreferredSize(new java.awt.Dimension(97, 41));
-        txtControlID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtControlIDActionPerformed(evt);
-            }
-        });
         pnlIDControlID.add(txtControlID, java.awt.BorderLayout.PAGE_END);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -170,11 +165,6 @@ public class App extends javax.swing.JFrame {
         txtControlQty.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         txtControlQty.setEnabled(false);
         txtControlQty.setPreferredSize(new java.awt.Dimension(97, 41));
-        txtControlQty.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtControlQtyActionPerformed(evt);
-            }
-        });
         pnlIDControlQty.add(txtControlQty, java.awt.BorderLayout.PAGE_END);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -273,11 +263,6 @@ public class App extends javax.swing.JFrame {
 
         txtControlName.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtControlName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
-        txtControlName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtControlNameActionPerformed(evt);
-            }
-        });
         pnlControlText.add(txtControlName);
 
         lblControlPrice.setForeground(new java.awt.Color(255, 255, 255));
@@ -616,68 +601,56 @@ public class App extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtControlIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtControlIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtControlIDActionPerformed
-
-    private void txtControlQtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtControlQtyActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtControlQtyActionPerformed
-
     private void btnControlRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlRemoveActionPerformed
         // TODO add your handling code here:
-        if (isSelling) {
-            removeRowFromStaging();
+        if (this.isSelling) {
+            this.removeRowFromStaging();
         }
     }//GEN-LAST:event_btnControlRemoveActionPerformed
 
     private void btnControlSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlSaveActionPerformed
         // TODO add your handling code here:
-        if (isSelling) {
-            saveStagingAndToggleButtons();
+        if (this.isSelling) {
+            this.saveStagingAndToggleButtons();
         } else {
             this.editProduct();
         }
     }//GEN-LAST:event_btnControlSaveActionPerformed
 
     private void btnControlSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlSearchActionPerformed
-        if (isSelling) {
-            txtControlName.setEnabled(true);
-            searchInTblDataSell();
-        } if(!isSelling){
-            searchInTblDataManage(); 
+        if (this.isSelling) {
+            this.txtControlName.setEnabled(true);
+            this.searchInTblDataSell();
+        } if(!this.isSelling){
+            this.searchInTblDataManage(); 
         }
     }//GEN-LAST:event_btnControlSearchActionPerformed
 
     private void btnSellTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSellTabActionPerformed
-        btnSellTab.setBackground(new Color(222, 179, 137));
-        btnManageTab.setBackground(new Color(217, 217, 217));
-        btnControlLeftButton.setText("Clear All");
-        btnControlRightButton.setText("Place Order");
-        lblDisplayLocation.setText("MENU      ");
+        this.btnSellTab.setBackground(new Color(222, 179, 137));
+        this.btnManageTab.setBackground(new Color(217, 217, 217));
+        this.btnControlLeftButton.setText("Clear All");
+        this.btnControlRightButton.setText("Place Order");
+        this.lblDisplayLocation.setText("MENU      ");
         this.pnlControlText.setVisible(false);
-        isSelling = true;
+        this.isSelling = true;
         
         // Control Access
         this.btnControlAdd.setText("Add");
     }//GEN-LAST:event_btnSellTabActionPerformed
 
     private void btnManageTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageTabActionPerformed
-        btnManageTab.setBackground(new Color(222, 179, 137));
-        btnSellTab.setBackground(new Color(217, 217, 217));
-        btnControlLeftButton.setText("Unstock");
-        btnControlRightButton.setText("Add to Inventory");
-        lblDisplayLocation.setText("INVENTORY      ");
-        isSelling = false;
+        this.btnManageTab.setBackground(new Color(222, 179, 137));
+        this.btnSellTab.setBackground(new Color(217, 217, 217));
+        this.btnControlLeftButton.setText("Unstock");
+        this.btnControlRightButton.setText("Add to Inventory");
+        this.lblDisplayLocation.setText("INVENTORY      ");
+        this.isSelling = false;
         
         // Control access
         this.btnControlAdd.setEnabled(true);
         this.btnControlAdd.setText("Add New");
     }//GEN-LAST:event_btnManageTabActionPerformed
-
-    private void txtControlNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtControlNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtControlNameActionPerformed
 
     private void btnControlRightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlRightButtonActionPerformed
         if(isSelling){    
@@ -695,19 +668,19 @@ public class App extends javax.swing.JFrame {
     @SuppressWarnings("empty-statement")
     private void btnControlLeftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlLeftButtonActionPerformed
         // TODO add your handling code here:
-        if (isSelling) {
-            clearStagingTableIfSelling();
-        } if(!isSelling) {
-            txtControlQty.setEnabled(true);
-            unstockItem();
+        if (this.isSelling) {
+            this.clearStagingTableIfSelling();
+        } if(!this.isSelling) {
+            this.txtControlQty.setEnabled(true);
+            this.unstockItem();
         }
     }//GEN-LAST:event_btnControlLeftButtonActionPerformed
 
     private void btnControlAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlAddActionPerformed
         // Selling Mode
-        if (isSelling) {
-            addSelectedRowToTblStaging();
-            updateStagingTotalAmount();
+        if (this.isSelling) {
+            this.addSelectedRowToTblStaging();
+            this.updateStagingTotalAmount();
         } else {
             if (!this.isManageAddMode){
                 // Enter Manage Add Mode
@@ -733,8 +706,8 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_btnControlAddActionPerformed
 
     private void btnControlEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlEditActionPerformed
-        if (isSelling) {
-            toggleButtonsIfStagingPopulated();
+        if (this.isSelling) {
+            this.toggleButtonsIfStagingPopulated();
         } else {
             if (!this.isManageEditMode){
                 // Enter Manage Edit Mode
@@ -755,11 +728,11 @@ public class App extends javax.swing.JFrame {
                 this.btnControlRightButton.setEnabled(false);
                 
                 // Set text values based on selected row in tblData
-                int selectedRow = tblData.getSelectedRow();
+                int selectedRow = this.tblData.getSelectedRow();
                 if (selectedRow >= 0) {
-                    this.txtControlQty.setText(tblData.getValueAt(selectedRow, 3).toString());  // Assuming column 3 is the quantity column
-                    this.txtControlName.setText(tblData.getValueAt(selectedRow, 1).toString());  // Assuming column 1 is the name column
-                    this.txtControlPrice.setText(tblData.getValueAt(selectedRow, 2).toString()); // Assuming column 2 is the price column
+                    this.txtControlQty.setText(this.tblData.getValueAt(selectedRow, 3).toString());  // Assuming column 3 is the quantity column
+                    this.txtControlName.setText(this.tblData.getValueAt(selectedRow, 1).toString());  // Assuming column 1 is the name column
+                    this.txtControlPrice.setText(this.tblData.getValueAt(selectedRow, 2).toString()); // Assuming column 2 is the price column
                 }
                 
                 
@@ -784,110 +757,7 @@ public class App extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnControlEditActionPerformed
-
-    private TableCellRenderer getTblDataAlignmentCellRender(TableCellRenderer oldRender, boolean header) {
-        return new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component com = oldRender.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (com instanceof JLabel label) {
-                    switch (column) {
-                        case 0, 4 -> label.setHorizontalAlignment(SwingConstants.CENTER);
-                        case 2, 3 -> label.setHorizontalAlignment(SwingConstants.TRAILING);
-                        default -> label.setHorizontalAlignment(SwingConstants.LEADING);
-                    }
-                    if (header == false) {
-                        if (column == 4) {
-                            if (Double.parseDouble(value.toString()) > 0) {
-                                com.setForeground(new Color(17, 182, 60));
-                                label.setText("+" + value);
-                            } else {
-                                com.setForeground(new Color(202, 48, 48));
-                            }
-                        } else {
-                            if (isSelected) {
-                                com.setForeground(table.getSelectionForeground());
-                            } else {
-                                com.setForeground(table.getForeground());
-                            }
-                        }
-                    }
-                }
-                return com;
-            }
-        };
-    }
-    
-    private void applyTblDataStyle(JTable table) {
-        JScrollPane scroll = (JScrollPane) table.getParent().getParent();
-        scroll.setBorder(BorderFactory.createEmptyBorder());
-        scroll.getVerticalScrollBar().putClientProperty(FlatClientProperties.STYLE, ""
-                + "background:$Table.background;"
-                + "track:$Table.background;"
-                + "trackArc:999");
-
-        table.getTableHeader().putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
-        table.putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
-
-        //  To Create table alignment
-        table.getTableHeader().setDefaultRenderer(getTblDataAlignmentCellRender(table.getTableHeader().getDefaultRenderer(), true));
-        table.setDefaultRenderer(Object.class, getTblDataAlignmentCellRender(table.getDefaultRenderer(Object.class), false));
-    }
-    
-    
-    
-    private TableCellRenderer getTblStagingAlignmentCellRender(TableCellRenderer oldRender, boolean header) {
-        return new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component com = oldRender.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (com instanceof JLabel label) {
-                    switch (column) {
-                        case 0 -> label.setHorizontalAlignment(SwingConstants.CENTER);
-                        case 2, 3, 4 -> label.setHorizontalAlignment(SwingConstants.TRAILING);
-                        default -> label.setHorizontalAlignment(SwingConstants.LEADING);
-                    }
-                    
-//                    if (header == false) {
-//                        if (column == 4) {
-//                            if (Double.parseDouble(value.toString()) > 0) {
-//                                com.setForeground(new Color(17, 182, 60));
-//                                label.setText("+" + value);
-//                            } else {
-//                                com.setForeground(new Color(202, 48, 48));
-//                            }
-//                        } else {
-//                            if (isSelected) {
-//                                com.setForeground(table.getSelectionForeground());
-//                            } else {
-//                                com.setForeground(table.getForeground());
-//                            }
-//                        }
-//                    }
-                }
-                return com;
-            }
-        };
-    }
-    
-    private void applyTblStagingStyle(JTable table) {
-        JScrollPane scroll = (JScrollPane) table.getParent().getParent();
-        scroll.setBorder(BorderFactory.createEmptyBorder());
-        scroll.getVerticalScrollBar().putClientProperty(FlatClientProperties.STYLE, ""
-                + "background:$Table.background;"
-                + "track:$Table.background;"
-                + "trackArc:999");
-
-        table.getTableHeader().putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
-        table.putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
-
-        //  To Create table alignment
-        table.getTableHeader().setDefaultRenderer(getTblStagingAlignmentCellRender(table.getTableHeader().getDefaultRenderer(), true));
-        table.setDefaultRenderer(Object.class, getTblStagingAlignmentCellRender(table.getDefaultRenderer(Object.class), false));
-    }
-    
-    
-    
+   
     public static void main(String args[]) {
         FontLoader.main(new String[]{});
         FlatIntelliJLaf.registerCustomDefaultsSource("style");
@@ -949,19 +819,18 @@ public class App extends javax.swing.JFrame {
     // Operation handling methods
 
     private void clearStagingTableIfSelling() {
-        DefaultTableModel model = (DefaultTableModel) tblStaging.getModel();
+        DefaultTableModel model = (DefaultTableModel) this.tblStaging.getModel();
         model.setRowCount(0);
-        applyTblDataStyle(tblStaging);
+        this.applyTblDataStyle(this.tblStaging);
 
         // Clear lblStagingTotalAmount
-        lblStagingTotalAmount.setText(String.format("PHP %.2f", 0.0));
+        this.lblStagingTotalAmount.setText(String.format("PHP %.2f", 0.0));
     } // QA'ed
 
     private void searchInTblDataSell() {
-        String idToSearch = txtControlID.getText(); // Get the ID to search from the text field
-        String nameToSearch = txtControlName.getText(); // Get the name to search from the text field
+        String idToSearch = this.txtControlID.getText(); // Get the ID to search from the text field
 
-        DefaultTableModel modelData = (DefaultTableModel) tblData.getModel();
+        DefaultTableModel modelData = (DefaultTableModel) this.tblData.getModel();
 
         for (int i = 0; i < modelData.getRowCount(); i++) {
             String idInRow = modelData.getValueAt(i, 0).toString(); // Get the ID in the row
@@ -970,16 +839,16 @@ public class App extends javax.swing.JFrame {
 
             if (idInRow.equals(idToSearch)) {
                 // If the ID in the row matches the ID to search, or the name in the row contains the name to search, select the row
-                tblData.setRowSelectionInterval(i, i);
+                this.tblData.setRowSelectionInterval(i, i);
 
                 System.out.println("Found");
                 // Scroll to the searched row
-                Rectangle rect = tblData.getCellRect(i, 0, true);
-                tblData.scrollRectToVisible(rect);
+                Rectangle rect = this.tblData.getCellRect(i, 0, true);
+                this.tblData.scrollRectToVisible(rect);
 
                 // Enable the "Add" button and the "txtControlID1" JTextField
-                btnControlAdd.setEnabled(true);
-                txtControlQty.setEnabled(true);
+                this.btnControlAdd.setEnabled(true);
+                this.txtControlQty.setEnabled(true);
 
                 break; // Exit the loop as we've found the ID or name to search
             }    
@@ -987,49 +856,49 @@ public class App extends javax.swing.JFrame {
     } // QA'ed
 
     private void searchInTblDataManage() {
-        String idToSearch = txtControlID.getText(); // Get the ID to search from the text field
+        String idToSearch = this.txtControlID.getText(); // Get the ID to search from the text field
     
-        DefaultTableModel modelData = (DefaultTableModel) tblData.getModel();
+        DefaultTableModel modelData = (DefaultTableModel) this.tblData.getModel();
     
         for (int i = 0; i < modelData.getRowCount(); i++) {
             String idInRow = modelData.getValueAt(i, 0).toString(); // Get the ID in the row
     
             if (idInRow.equals(idToSearch)) {
                 // If the ID or name in the row matches the ID or name to search, select the row
-                tblData.setRowSelectionInterval(i, i);
+                this.tblData.setRowSelectionInterval(i, i);
     
                 // Scroll to the searched row
-                Rectangle rect = tblData.getCellRect(i, 0, true);
-                tblData.scrollRectToVisible(rect);
+                Rectangle rect = this.tblData.getCellRect(i, 0, true);
+                this.tblData.scrollRectToVisible(rect);
     
                 // Enable the "Add" button and the "txtControlID1" JTextField
-                txtControlQty.setEnabled(true);
+                this.txtControlQty.setEnabled(true);
     
                 break; // Exit the loop as we've found the ID or name to search
             }    
         }
         
-        btnControlEdit.setEnabled(true);
+        this.btnControlEdit.setEnabled(true);
     }
 
 
 
     private void addSelectedRowToTblStaging() {
-        DefaultTableModel modelData = (DefaultTableModel) tblData.getModel();
-        DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+        DefaultTableModel modelData = (DefaultTableModel) this.tblData.getModel();
+        DefaultTableModel modelStaging = (DefaultTableModel) this.Staging.getModel();
         
         // Autoselect item to add when in editing mode
-        if (isSalesEditingMode){
-            searchInTblDataSell();
+        if (this.isSalesEditingMode){
+            this.searchInTblDataSell();
         }
 
-        int selectedRow = tblData.getSelectedRow(); // Get the selected row
+        int selectedRow = this.tblData.getSelectedRow(); // Get the selected row
         int id = Integer.parseInt(modelData.getValueAt(selectedRow, 0).toString()); // Get the ID in the selected row
         String name = modelData.getValueAt(selectedRow, 1).toString(); // Get the name in the selected row
         double price = Double.parseDouble(modelData.getValueAt(selectedRow, 2).toString()); // Get the price in the selected row
-        int qty = Integer.parseInt(txtControlQty.getText()); // Get the quantity from txtControlID1
+        int qty = Integer.parseInt(this.txtControlQty.getText()); // Get the quantity from txtControlID1
         
-        if (qty == 0 && !isSalesEditingMode){
+        if (qty == 0 && !this.isSalesEditingMode){
             this.showMessageDialogue("Please input how many drinks the customer would like to order.");
             return;
         }
@@ -1059,47 +928,47 @@ public class App extends javax.swing.JFrame {
             }
         } else {
             // If the item is not yet in the staging table, add it
-            if(!isSalesEditingMode){
+            if(!this.isSalesEditingMode){
                 modelStaging.addRow(new Object[]{id, name, String.format("%.2f", price), qty, String.format("%.2f", price * qty )});
             }
         }
         
         // Enable btnControlRemove, btnControlEdit, and btnControlSave if tblStaging is populated
         if (modelStaging.getRowCount() > 0) {
-            btnControlEdit.setEnabled(true);
+            this.btnControlEdit.setEnabled(true);
         }
 
         // Reset txtControlID and txtControlID1 to 0 and disable buttonControlAdd and txtControlID1
-        txtControlID.setText("0");
-        txtControlQty.setText("0");
-        txtControlName.setText("");
+        this.txtControlID.setText("0");
+        this.txtControlQty.setText("0");
+        this.txtControlName.setText("");
         
-        if(!isSalesEditingMode){
-            btnControlAdd.setEnabled(false);
-            txtControlQty.setEnabled(false);
+        if(!this.isSalesEditingMode){
+            this.btnControlAdd.setEnabled(false);
+            this.txtControlQty.setEnabled(false);
         }
     } // QA'ed
 
     private void toggleButtonsIfStagingPopulated() {
         // Get the model of tblStaging
-        DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+        DefaultTableModel modelStaging = (DefaultTableModel) this.tblStaging.getModel();
 
         // Check if tblStaging is populated
         if (modelStaging.getRowCount() > 0) {
-           if(!isSalesEditingMode){
+           if(!this.isSalesEditingMode){
                 this.isSalesEditingMode = true;
-                btnControlEdit.setText("Exit");
-                btnControlAdd.setEnabled(true);
-                btnControlRemove.setEnabled(true);
-                txtControlQty.setEnabled(true);
-                btnControlSearch.setEnabled(false);
+                this.btnControlEdit.setText("Exit");
+                this.btnControlAdd.setEnabled(true);
+                this.btnControlRemove.setEnabled(true);
+                this.txtControlQty.setEnabled(true);
+                this.btnControlSearch.setEnabled(false);
            } else {
                 this.isSalesEditingMode = false;
-                btnControlEdit.setText("Edit");
-                btnControlAdd.setEnabled(false);
-                btnControlRemove.setEnabled(false);
-                txtControlQty.setEnabled(false);
-                btnControlSearch.setEnabled(true);
+                this.btnControlEdit.setText("Edit");
+                this.btnControlAdd.setEnabled(false);
+                this.btnControlRemove.setEnabled(false);
+                this.txtControlQty.setEnabled(false);
+                this.btnControlSearch.setEnabled(true);
                
            }
         }
@@ -1107,13 +976,13 @@ public class App extends javax.swing.JFrame {
 
     private void removeRowFromStaging() {
         // Get the model of tblStaging
-        DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+        DefaultTableModel modelStaging = (DefaultTableModel) this.tblStaging.getModel();
 
         // Get the ID or name to remove from txtControlID or txtControlName
-        String idOrNameToRemove = txtControlID.getText().isEmpty() ? txtControlName.getText() : txtControlID.getText();
+        String idOrNameToRemove = this.txtControlID.getText().isEmpty() ? txtControlName.getText() : txtControlID.getText();
 
         // Get the quantity to remove from txtControlID1
-        int qtyToRemove = Integer.parseInt(txtControlQty.getText());
+        int qtyToRemove = Integer.parseInt(this.txtControlQty.getText());
 
         double totalAmount = 0.0;
 
@@ -1137,9 +1006,9 @@ public class App extends javax.swing.JFrame {
                 }
 
                 // Reset txtControlID, txtControlName and txtControlID1 to "0"
-                txtControlID.setText("0");
-                txtControlName.setText("");
-                txtControlQty.setText("0");
+                this.txtControlID.setText("0");
+                this.txtControlName.setText("");
+                this.txtControlQty.setText("0");
             }
 
             // Calculate the total amount
@@ -1152,22 +1021,22 @@ public class App extends javax.swing.JFrame {
         modelStaging.setValueAt(String.format("%.2f", totalAmount), modelStaging.getRowCount() - 1, 4);
 
         // Update the total amount in lblStagingTotalAmount
-        lblStagingTotalAmount.setText(String.format("PHP %.2f", 0.0));
+        this.lblStagingTotalAmount.setText(String.format("PHP %.2f", 0.0));
     } // QA'ed
 
 
     private void saveStagingAndToggleButtons() {
         // Disable btnControlRemove
-        btnControlRemove.setEnabled(false);
+        this.btnControlRemove.setEnabled(false);
 
         // Enable btnControlSearch
-        btnControlSearch.setEnabled(true);
+        this.btnControlSearch.setEnabled(true);
     }
 
     private void decreaseQuantityInDataBasedOnStaging() {
         // Get the models of tblData and tblStaging
-        DefaultTableModel modelData = (DefaultTableModel) tblData.getModel();
-        DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+        DefaultTableModel modelData = (DefaultTableModel) this.tblData.getModel();
+        DefaultTableModel modelStaging = (DefaultTableModel) this.tblStaging.getModel();
 
         // Iterate over the rows in tblStaging
         for (int i = 0; i < modelStaging.getRowCount(); i++) {
@@ -1195,7 +1064,7 @@ public class App extends javax.swing.JFrame {
 
     private void updateStagingTotalAmount() {
         // Get the model of tblStaging
-        DefaultTableModel modelStaging = (DefaultTableModel) tblStaging.getModel();
+        DefaultTableModel modelStaging = (DefaultTableModel) this.tblStaging.getModel();
 
         // Update the total
         double total = 0;
@@ -1204,21 +1073,21 @@ public class App extends javax.swing.JFrame {
             total += totalInStaging;
         }
 
-        lblStagingTotalAmount.setText(String.format("PHP %.2f", total));
+        this.lblStagingTotalAmount.setText(String.format("PHP %.2f", total));
     } // QA'ed
 
     public void unstockItem() {
         // Get the ID or name from txtControlID or txtControlName
-        String id = txtControlID.getText();
+        String id = this.txtControlID.getText();
 
         // Get the quantity to unstock from txtControllerID1
-        int quantityToUnstock = Integer.parseInt(txtControlQty.getText());
+        int quantityToUnstock = Integer.parseInt(this.txtControlQty.getText());
 
         // Scroll to the item in txtData that matches the ID or name
         for (int i = 0; i < tblData.getRowCount(); i++) {
-            if (tblData.getValueAt(i, 0).toString().equals(id) || tblData.getValueAt(i, 1).toString().equals(id)) {
+            if (this.tblData.getValueAt(i, 0).toString().equals(id) || this.tblData.getValueAt(i, 1).toString().equals(id)) {
                 // Subtract the quantity from the item's current quantity
-                int currentQuantity = Integer.parseInt(tblData.getValueAt(i, 3).toString()); // Changed index to 3
+                int currentQuantity = Integer.parseInt(this.tblData.getValueAt(i, 3).toString()); // Changed index to 3
 
                 // Check if unstocking would result in negative quantity
                 if (currentQuantity - quantityToUnstock < 0) {
@@ -1228,19 +1097,19 @@ public class App extends javax.swing.JFrame {
                 }
 
                 // Update the quantity in the table
-                tblData.setValueAt(currentQuantity - quantityToUnstock, i, 3); // Changed index to 3
+                this.tblData.setValueAt(currentQuantity - quantityToUnstock, i, 3); // Changed index to 3
 
                 // Update the quantity in the database
-                int productId = Integer.parseInt(tblData.getValueAt(i, 0).toString());
+                int productId = Integer.parseInt(this.tblData.getValueAt(i, 0).toString());
                 DatabaseUtil.reduceStockQuantity(productId, quantityToUnstock);
 
                 // Scroll to the item
-                tblData.setRowSelectionInterval(i, i);
-                tblData.scrollRectToVisible(new Rectangle(tblData.getCellRect(i, 0, true)));
+                this.tblData.setRowSelectionInterval(i, i);
+                this.tblData.scrollRectToVisible(new Rectangle(this.tblData.getCellRect(i, 0, true)));
 
                 // Reset txtControlID and txtControlID1 to 0
-                txtControlID.setText("0");
-                txtControlQty.setText("0");
+                this.txtControlID.setText("0");
+                this.txtControlQty.setText("0");
 
                 break;
             }
@@ -1249,29 +1118,29 @@ public class App extends javax.swing.JFrame {
 
     public void stockItem() {
         // Get the ID or name from txtControlID or txtControlName
-        String id = txtControlID.getText();
+        String id = this.txtControlID.getText();
 
         // Get the quantity to stock from txtControllerID1
-        int quantityToStock = Integer.parseInt(txtControlQty.getText());
+        int quantityToStock = Integer.parseInt(this.txtControlQty.getText());
 
         // Scroll to the item in txtData that matches the ID or name
-        for (int i = 0; i < tblData.getRowCount(); i++) {
-            if (tblData.getValueAt(i, 0).toString().equals(id)) {
+        for (int i = 0; i < this.tblData.getRowCount(); i++) {
+            if (this.tblData.getValueAt(i, 0).toString().equals(id)) {
                 // Add the quantity to the item's current quantity
-                int currentQuantity = Integer.parseInt(tblData.getValueAt(i, 3).toString());
-                tblData.setValueAt(currentQuantity + quantityToStock, i, 3);
+                int currentQuantity = Integer.parseInt(this.tblData.getValueAt(i, 3).toString());
+                this.tblData.setValueAt(currentQuantity + quantityToStock, i, 3);
 
                 // Update the quantity in the database
-                int productId = Integer.parseInt(tblData.getValueAt(i, 0).toString());
+                int productId = Integer.parseInt(this.tblData.getValueAt(i, 0).toString());
                 DatabaseUtil.addStockQuantity(productId, quantityToStock);
 
                 // Scroll to the item
-                tblData.setRowSelectionInterval(i, i);
-                tblData.scrollRectToVisible(new Rectangle(tblData.getCellRect(i, 0, true)));
+                this.tblData.setRowSelectionInterval(i, i);
+                this.tblData.scrollRectToVisible(new Rectangle(this.tblData.getCellRect(i, 0, true)));
 
                 // Reset txtControlID and txtControlID1 to 0
-                txtControlID.setText("0");
-                txtControlQty.setText("0");
+                this.txtControlID.setText("0");
+                this.txtControlQty.setText("0");
 
                 break;
             }
@@ -1281,9 +1150,9 @@ public class App extends javax.swing.JFrame {
 
     public void addProduct() {
         // Get data from control
-        String productName = txtControlName.getText();
-        double productPrice = Double.parseDouble(txtControlPrice.getText());
-        int productQuantity = Integer.parseInt(txtControlQty.getText());
+        String productName = this.txtControlName.getText();
+        double productPrice = Double.parseDouble(this.txtControlPrice.getText());
+        int productQuantity = Integer.parseInt(this.txtControlQty.getText());
 
         // Add the new product to the database
         Product product = DatabaseUtil.addNewProduct(productName, productPrice);
@@ -1298,21 +1167,21 @@ public class App extends javax.swing.JFrame {
         Object[] row = new Object[]{product.getId(), product.getName(), String.format("%.2f", product.getPrice()), product.getStockQuantity()};
 
         // Get the table model
-        DefaultTableModel model = (DefaultTableModel) tblData.getModel();
+        DefaultTableModel model = (DefaultTableModel) this.tblData.getModel();
 
         // Add the new row to the table model
         model.addRow(row);
 
         // Scroll to the added row and select it
         int rowCount = model.getRowCount();
-        tblData.setRowSelectionInterval(rowCount - 1, rowCount - 1);
-        Rectangle rect = tblData.getCellRect(rowCount - 1, 0, true);
-        tblData.scrollRectToVisible(rect);
+        this.tblData.setRowSelectionInterval(rowCount - 1, rowCount - 1);
+        Rectangle rect = this.tblData.getCellRect(rowCount - 1, 0, true);
+        this.tblData.scrollRectToVisible(rect);
 
         // Reset txtControlName, txtControlPrice, and txtControlID1
-        txtControlName.setText("");
-        txtControlPrice.setText("0");
-        txtControlQty.setText("0");
+        this.txtControlName.setText("");
+        this.txtControlPrice.setText("0");
+        this.txtControlQty.setText("0");
         
         // Exit Manage Add Mode
         this.isManageAddMode = false;
@@ -1326,9 +1195,9 @@ public class App extends javax.swing.JFrame {
     public void editProduct() {
         // Get data from controls
         int productId = Integer.parseInt(txtControlID.getText());
-        String productName = txtControlName.getText();
-        double productPrice = Double.parseDouble(txtControlPrice.getText());
-        int productQuantity = Integer.parseInt(txtControlQty.getText());
+        String productName = this.txtControlName.getText();
+        double productPrice = Double.parseDouble(this.txtControlPrice.getText());
+        int productQuantity = Integer.parseInt(this.txtControlQty.getText());
 
         // Update the product in the database
         DatabaseUtil.updateProductName(productId, productName);
@@ -1336,7 +1205,7 @@ public class App extends javax.swing.JFrame {
         DatabaseUtil.updateStockQuantity(productId, productQuantity);
 
         // Update the row in the table model
-        DefaultTableModel model = (DefaultTableModel) tblData.getModel();
+        DefaultTableModel model = (DefaultTableModel) this.tblData.getModel();
         int rowCount = model.getRowCount();
 
         for (int i = 0; i < rowCount; i++) {
@@ -1349,10 +1218,10 @@ public class App extends javax.swing.JFrame {
         }
 
         // Reset controls
-        txtControlID.setText("0");
-        txtControlName.setText("");
-        txtControlPrice.setText("0");
-        txtControlQty.setText("0");
+        this.txtControlID.setText("0");
+        this.txtControlName.setText("");
+        this.txtControlPrice.setText("0");
+        this.txtControlQty.setText("0");
 
         
         // Exit Manage Edit Mode
@@ -1375,7 +1244,110 @@ public class App extends javax.swing.JFrame {
     public void showMessageDialogue(String message){
         JOptionPane.showMessageDialog(null, message, "The Coffee Canvas", JOptionPane.INFORMATION_MESSAGE);
     }
+    
+    
+    private TableCellRenderer getTblDataAlignmentCellRender(TableCellRenderer oldRender, boolean header) {
+        return new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component com = oldRender.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (com instanceof JLabel label) {
+                    switch (column) {
+                        case 0, 4 -> label.setHorizontalAlignment(SwingConstants.CENTER);
+                        case 2, 3 -> label.setHorizontalAlignment(SwingConstants.TRAILING);
+                        default -> label.setHorizontalAlignment(SwingConstants.LEADING);
+                    }
+                    if (header == false) {
+                        if (column == 4) {
+                            if (Double.parseDouble(value.toString()) > 0) {
+                                com.setForeground(new Color(17, 182, 60));
+                                label.setText("+" + value);
+                            } else {
+                                com.setForeground(new Color(202, 48, 48));
+                            }
+                        } else {
+                            if (isSelected) {
+                                com.setForeground(table.getSelectionForeground());
+                            } else {
+                                com.setForeground(table.getForeground());
+                            }
+                        }
+                    }
+                }
+                return com;
+            }
+        };
+    }
+    
+    
+    private void applyTblDataStyle(JTable table) {
+        JScrollPane scroll = (JScrollPane) table.getParent().getParent();
+        scroll.setBorder(BorderFactory.createEmptyBorder());
+        scroll.getVerticalScrollBar().putClientProperty(FlatClientProperties.STYLE, ""
+                + "background:$Table.background;"
+                + "track:$Table.background;"
+                + "trackArc:999");
 
+        table.getTableHeader().putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
+        table.putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
 
+        //  To Create table alignment
+        table.getTableHeader().setDefaultRenderer(this.getTblDataAlignmentCellRender(table.getTableHeader().getDefaultRenderer(), true));
+        table.setDefaultRenderer(Object.class, this.getTblDataAlignmentCellRender(table.getDefaultRenderer(Object.class), false));
+    }
+    
+    
+    
+    private TableCellRenderer getTblStagingAlignmentCellRender(TableCellRenderer oldRender, boolean header) {
+        return new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component com = oldRender.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (com instanceof JLabel label) {
+                    switch (column) {
+                        case 0 -> label.setHorizontalAlignment(SwingConstants.CENTER);
+                        case 2, 3, 4 -> label.setHorizontalAlignment(SwingConstants.TRAILING);
+                        default -> label.setHorizontalAlignment(SwingConstants.LEADING);
+                    }
+                    
+//                    if (header == false) {
+//                        if (column == 4) {
+//                            if (Double.parseDouble(value.toString()) > 0) {
+//                                com.setForeground(new Color(17, 182, 60));
+//                                label.setText("+" + value);
+//                            } else {
+//                                com.setForeground(new Color(202, 48, 48));
+//                            }
+//                        } else {
+//                            if (isSelected) {
+//                                com.setForeground(table.getSelectionForeground());
+//                            } else {
+//                                com.setForeground(table.getForeground());
+//                            }
+//                        }
+//                    }
+                }
+                return com;
+            }
+        };
+    }
+    
+    
+    private void applyTblStagingStyle(JTable table) {
+        JScrollPane scroll = (JScrollPane) table.getParent().getParent();
+        scroll.setBorder(BorderFactory.createEmptyBorder());
+        scroll.getVerticalScrollBar().putClientProperty(FlatClientProperties.STYLE, ""
+                + "background:$Table.background;"
+                + "track:$Table.background;"
+                + "trackArc:999");
+
+        table.getTableHeader().putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
+        table.putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
+
+        //  To Create table alignment
+        table.getTableHeader().setDefaultRenderer(this.getTblStagingAlignmentCellRender(table.getTableHeader().getDefaultRenderer(), true));
+        table.setDefaultRenderer(Object.class, this.getTblStagingAlignmentCellRender(table.getDefaultRenderer(Object.class), false));
+    }
+    
 
 }
