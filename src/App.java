@@ -631,6 +631,13 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_btnControlSearchActionPerformed
 
     private void btnSellTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSellTabActionPerformed
+        DefaultTableModel modelStaging = (DefaultTableModel) this.tblStaging.getModel();
+
+        // Check if tblStaging is populated
+        if (modelStaging.getRowCount() > 0) {
+            this.pnlControlText.setVisible(true);
+        }
+        
         this.btnSellTab.setBackground(new Color(222, 179, 137));
         this.btnManageTab.setBackground(new Color(217, 217, 217));
         this.lblDisplayLocation.setText("MENU      ");
@@ -671,11 +678,14 @@ public class App extends javax.swing.JFrame {
                 return;
             }
             
+            this.processOrder();
             this.decreaseQuantityInDataBasedOnStaging();
             this.clearStagingTableIfSelling();
-            this.btnControlEdit.setEnabled(false);
-            this.showMessageDialogue("Ordered!");
+            this.showMessageDialogue("Ordered! " + OrderExporter.exportToCSV());
+            
+            // Reset control settings
             this.txtControlName.setText("");
+            this.btnControlEdit.setEnabled(false);
             this.btnControlLeftButton.setEnabled(false);
             this.btnControlRightButton.setEnabled(false);
             this.pnlControlText.setVisible(false);
@@ -902,6 +912,30 @@ public class App extends javax.swing.JFrame {
         }
         
         this.btnControlEdit.setEnabled(true);
+    }
+    
+    private void processOrder() {
+        DefaultTableModel modelStaging = (DefaultTableModel) this.tblStaging.getModel();
+
+        if (modelStaging.getRowCount() == 0) {
+            this.showMessageDialogue("No items in the staging table.");
+            return;
+        }
+
+        // Get customer name (you can customize this based on your application's logic)
+        String customerName = this.txtControlName.getText();
+
+        // Arrays to store product IDs and quantities
+        int[] productIds = new int[modelStaging.getRowCount()];
+        int[] quantities = new int[modelStaging.getRowCount()];
+
+        for (int i = 0; i < modelStaging.getRowCount(); i++) {
+            productIds[i] = Integer.parseInt(modelStaging.getValueAt(i, 0).toString());
+            quantities[i] = Integer.parseInt(modelStaging.getValueAt(i, 3).toString());
+        }
+
+        // Call the DatabaseUtil.insertOrder() method
+        DatabaseUtil.insertOrder(customerName, productIds, quantities);
     }
 
 

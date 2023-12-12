@@ -4,6 +4,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -167,6 +168,80 @@ public class DatabaseUtil {
             System.err.println("SQL Error: " + e.getMessage());
         }
     }
+    
+    
+    public static void insertOrder(String customerName, int[] productIds, int[] quantities) {
+        String insertOrderQuery = "INSERT INTO `order` (customer_name, order_date) VALUES (?, ?)";
+        String insertProductOrderQuery = "INSERT INTO product_order (product_id, order_id, price, quantity) VALUES (?, ?, ?, ?)";
+        
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+            con.setAutoCommit(false); // Disable auto-commit for transaction
+
+            // Insert into the 'order' table
+            try (PreparedStatement orderStmt = con.prepareStatement(insertOrderQuery, Statement.RETURN_GENERATED_KEYS)) {
+                orderStmt.setString(1, customerName);
+                orderStmt.setObject(2, LocalDateTime.now());
+                orderStmt.executeUpdate();
+
+                // Get the generated order ID
+                int orderId;
+                try (var generatedKeys = orderStmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        orderId = generatedKeys.getInt(1);
+                    } else {
+                        throw new SQLException("Creating order failed, no ID obtained.");
+                    }
+                }
+
+                // Insert into the 'product_order' table for each product in the order
+                try (PreparedStatement productOrderStmt = con.prepareStatement(insertProductOrderQuery)) {
+                    for (int i = 0; i < productIds.length; i++) {
+                        productOrderStmt.setInt(1, productIds[i]);
+                        productOrderStmt.setInt(2, orderId);
+                        productOrderStmt.setDouble(3, getProductPrice(productIds[i])); // Assuming getProductPrice exists
+                        productOrderStmt.setInt(4, quantities[i]);
+                        productOrderStmt.addBatch();
+                    }
+
+                    // Execute the batch insert
+                    productOrderStmt.executeBatch();
+                }
+            }
+
+            con.commit(); // Commit the transaction
+            con.setAutoCommit(true); // Re-enable auto-commit
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            try {
+                if (con != null) {
+                    con.rollback(); // Rollback the transaction in case of an exception
+                    con.setAutoCommit(true); // Re-enable auto-commit
+                }
+            } catch (SQLException rollbackException) {
+                System.err.println("Rollback Error: " + rollbackException.getMessage());
+            }
+        }
+    }
+
+    // Assuming you have a method to get the product price based on the product ID
+    private static double getProductPrice(int productId) {
+        String query = "SELECT price FROM products WHERE id = ?";
+        try (Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, productId);
+            try (var resultSet = pstmt.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getDouble("price");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+        }
+        return 0; // Return 0 in case of failure
+    }
+
 
 
 
