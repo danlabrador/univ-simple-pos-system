@@ -609,6 +609,27 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (this.isSelling) {
             this.removeRowFromStaging();
+        } else {
+            DatabaseUtil.removeProductById(Integer.parseInt(this.txtControlID.getText()));
+            DatabaseUtil.populateTblData(this.tblData);
+            // Exit Manage Edit Mode
+            this.isManageEditMode = false;
+
+            // Texts
+            this.txtControlID.setEnabled(true);
+            this.txtControlQty.setEnabled(false);
+            this.txtControlQty.setText("0");
+            this.pnlControlText.setVisible(false);
+
+            // Buttons
+            this.btnControlAdd.setEnabled(true);
+            this.btnControlSearch.setEnabled(true);
+            this.btnControlEdit.setText("Edit");
+            this.btnControlSave.setEnabled(false);
+            this.btnControlEdit.setEnabled(false);
+            this.btnControlLeftButton.setEnabled(false);
+            this.btnControlRightButton.setEnabled(false);
+            this.btnControlRemove.setEnabled(false);
         }
     }//GEN-LAST:event_btnControlRemoveActionPerformed
 
@@ -623,12 +644,9 @@ public class App extends javax.swing.JFrame {
 
     private void btnControlSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlSearchActionPerformed
         if (this.isSelling) {
-            this.txtControlName.setEnabled(true);
             this.searchInTblDataSell();
         } if(!this.isSelling){
             this.searchInTblDataManage();
-            this.btnControlLeftButton.setEnabled(true);
-            this.btnControlRightButton.setEnabled(true);
         }
     }//GEN-LAST:event_btnControlSearchActionPerformed
 
@@ -668,9 +686,10 @@ public class App extends javax.swing.JFrame {
         this.btnControlAdd.setEnabled(true);
         this.btnControlAdd.setText("Add New");
         this.lblControlName.setText("  Product Name  ");
-        this.lblControlPrice.setVisible(false);
-        this.txtControlPrice.setVisible(false);
+        this.lblControlPrice.setVisible(true);
+        this.txtControlPrice.setVisible(true);
         this.pnlControlText.setVisible(false);
+        this.btnControlEdit.setEnabled(false);
     }//GEN-LAST:event_btnManageTabActionPerformed
 
     private void btnControlRightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlRightButtonActionPerformed
@@ -693,9 +712,9 @@ public class App extends javax.swing.JFrame {
             this.pnlControlText.setVisible(false);
         } if(!isSelling){
             this.stockItem();
-            this.addProduct();
             this.btnControlLeftButton.setEnabled(false);
             this.btnControlRightButton.setEnabled(false);
+            this.addProduct();
         }
             
     }//GEN-LAST:event_btnControlRightButtonActionPerformed
@@ -707,6 +726,7 @@ public class App extends javax.swing.JFrame {
             this.clearStagingTableIfSelling();
             this.btnControlLeftButton.setEnabled(false);
             this.btnControlRightButton.setEnabled(false);
+            this.btnControlEdit.setEnabled(false);
         } if(!this.isSelling) {
             this.txtControlQty.setEnabled(true);
             this.unstockItem();
@@ -732,6 +752,8 @@ public class App extends javax.swing.JFrame {
                 this.btnControlSearch.setEnabled(false);
                 this.txtControlQty.setEnabled(true);
                 this.txtControlID.setText("0");
+                this.btnControlLeftButton.setEnabled(true);
+                this.btnControlRightButton.setEnabled(true);
             } else {
                 // Exit Manage Add Mode
                 this.isManageAddMode = false;
@@ -740,6 +762,8 @@ public class App extends javax.swing.JFrame {
                 this.txtControlID.setEnabled(true);
                 this.btnControlSearch.setEnabled(true);
                 this.txtControlQty.setEnabled(false);
+                this.btnControlLeftButton.setEnabled(false);
+                this.btnControlRightButton.setEnabled(false);
             }
         }
     }//GEN-LAST:event_btnControlAddActionPerformed
@@ -765,10 +789,12 @@ public class App extends javax.swing.JFrame {
                 this.btnControlSave.setEnabled(true);
                 this.btnControlLeftButton.setEnabled(false);
                 this.btnControlRightButton.setEnabled(false);
+                this.btnControlRemove.setEnabled(true);
                 
                 // Set text values based on selected row in tblData
                 int selectedRow = this.tblData.getSelectedRow();
                 if (selectedRow >= 0) {
+                    this.txtControlID.setText(this.tblData.getValueAt(selectedRow, 0).toString());
                     this.txtControlQty.setText(this.tblData.getValueAt(selectedRow, 3).toString());  // Assuming column 3 is the quantity column
                     this.txtControlName.setText(this.tblData.getValueAt(selectedRow, 1).toString());  // Assuming column 1 is the name column
                     this.txtControlPrice.setText(this.tblData.getValueAt(selectedRow, 2).toString()); // Assuming column 2 is the price column
@@ -793,6 +819,7 @@ public class App extends javax.swing.JFrame {
                 this.btnControlEdit.setEnabled(false);
                 this.btnControlLeftButton.setEnabled(true);
                 this.btnControlRightButton.setEnabled(true);
+                this.btnControlRemove.setEnabled(false);
             }
         }
     }//GEN-LAST:event_btnControlEditActionPerformed
@@ -870,11 +897,11 @@ public class App extends javax.swing.JFrame {
         String idToSearch = this.txtControlID.getText(); // Get the ID to search from the text field
 
         DefaultTableModel modelData = (DefaultTableModel) this.tblData.getModel();
+        boolean found = false;
 
         for (int i = 0; i < modelData.getRowCount(); i++) {
             String idInRow = modelData.getValueAt(i, 0).toString(); // Get the ID in the row
-            
-            System.out.println("Searching: " + idToSearch);
+
 
             if (idInRow.equals(idToSearch)) {
                 // If the ID in the row matches the ID to search, or the name in the row contains the name to search, select the row
@@ -888,9 +915,16 @@ public class App extends javax.swing.JFrame {
                 // Enable the "Add" button and the "txtControlID1" JTextField
                 this.btnControlAdd.setEnabled(true);
                 this.txtControlQty.setEnabled(true);
+                found = true;
 
                 break; // Exit the loop as we've found the ID or name to search
             }    
+        }
+        
+        if (found){
+            this.txtControlName.setEnabled(true);
+        } else {
+            this.showMessageDialogue("Product ID not found.");
         }
     } // QA'ed
 
@@ -898,6 +932,7 @@ public class App extends javax.swing.JFrame {
         String idToSearch = this.txtControlID.getText(); // Get the ID to search from the text field
     
         DefaultTableModel modelData = (DefaultTableModel) this.tblData.getModel();
+        boolean found = false;
     
         for (int i = 0; i < modelData.getRowCount(); i++) {
             String idInRow = modelData.getValueAt(i, 0).toString(); // Get the ID in the row
@@ -912,12 +947,19 @@ public class App extends javax.swing.JFrame {
     
                 // Enable the "Add" button and the "txtControlID1" JTextField
                 this.txtControlQty.setEnabled(true);
+                found = true;
     
                 break; // Exit the loop as we've found the ID or name to search
-            }    
+            }
         }
         
-        this.btnControlEdit.setEnabled(true);
+        if(found) {
+            this.btnControlEdit.setEnabled(true);
+            this.btnControlLeftButton.setEnabled(false);
+            this.btnControlRightButton.setEnabled(true);
+        } else {
+            this.showMessageDialogue("Product ID not found.");
+        }
     }
     
     private void processOrder() {

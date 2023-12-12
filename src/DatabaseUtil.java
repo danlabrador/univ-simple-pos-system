@@ -15,6 +15,7 @@ public class DatabaseUtil {
   
     public static void populateTblData(JTable table) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
         String query = "SELECT p.id AS ProductID, p.name AS ProductName, p.price AS Price, " +
                        "SUM(s.quantity) AS StockQuantity FROM products p " +
                        "LEFT JOIN stock s ON p.id = s.product_id " +
@@ -149,25 +150,26 @@ public class DatabaseUtil {
     
     
     public static void removeProductById(int productId) {
-        String deleteProductQuery = "DELETE FROM products WHERE id = ?";
         String deleteStockQuery = "DELETE FROM stock WHERE product_id = ?";
+        String deleteProductQuery = "DELETE FROM products WHERE id = ?";
 
         try (Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword)) {
-            // Delete product from the 'products' table
-            try (PreparedStatement deleteProductStmt = con.prepareStatement(deleteProductQuery)) {
-                deleteProductStmt.setInt(1, productId);
-                deleteProductStmt.executeUpdate();
-            }
-
             // Delete related stock entries from the 'stock' table
             try (PreparedStatement deleteStockStmt = con.prepareStatement(deleteStockQuery)) {
                 deleteStockStmt.setInt(1, productId);
                 deleteStockStmt.executeUpdate();
             }
+
+            // Delete product from the 'products' table
+            try (PreparedStatement deleteProductStmt = con.prepareStatement(deleteProductQuery)) {
+                deleteProductStmt.setInt(1, productId);
+                deleteProductStmt.executeUpdate();
+            }
         } catch (SQLException e) {
             System.err.println("SQL Error: " + e.getMessage());
         }
     }
+
     
     
     public static void insertOrder(String customerName, int[] productIds, int[] quantities) {
