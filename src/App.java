@@ -626,7 +626,9 @@ public class App extends javax.swing.JFrame {
             this.txtControlName.setEnabled(true);
             this.searchInTblDataSell();
         } if(!this.isSelling){
-            this.searchInTblDataManage(); 
+            this.searchInTblDataManage();
+            this.btnControlLeftButton.setEnabled(true);
+            this.btnControlRightButton.setEnabled(true);
         }
     }//GEN-LAST:event_btnControlSearchActionPerformed
 
@@ -692,6 +694,8 @@ public class App extends javax.swing.JFrame {
         } if(!isSelling){
             this.stockItem();
             this.addProduct();
+            this.btnControlLeftButton.setEnabled(false);
+            this.btnControlRightButton.setEnabled(false);
         }
             
     }//GEN-LAST:event_btnControlRightButtonActionPerformed
@@ -706,6 +710,8 @@ public class App extends javax.swing.JFrame {
         } if(!this.isSelling) {
             this.txtControlQty.setEnabled(true);
             this.unstockItem();
+            this.btnControlLeftButton.setEnabled(false);
+            this.btnControlRightButton.setEnabled(false);
         }
     }//GEN-LAST:event_btnControlLeftButtonActionPerformed
 
@@ -1086,7 +1092,7 @@ public class App extends javax.swing.JFrame {
         modelStaging.setValueAt(String.format("%.2f", totalAmount), modelStaging.getRowCount() - 1, 4);
 
         // Update the total amount in lblStagingTotalAmount
-        this.lblStagingTotalAmount.setText(String.format("PHP %.2f", 0.0));
+        this.lblStagingTotalAmount.setText(String.format("PHP %.2f", totalAmount));
     } // QA'ed
 
 

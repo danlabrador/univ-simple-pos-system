@@ -52,7 +52,7 @@ public class OrderExporter {
 
             } catch (IOException e) {
                 // Handle the case where the file is being used by another process
-                return "Error updating the CSV file. There is another program that is using the file. If you wish the CSV file to be updated, kindly terminate that program.";
+                return "Error updating the CSV file. Don't worry, the order has been saved in the database.\n\nBut, there is another program that is using the file. If you wish the CSV file to be updated, kindly terminate that program.";
             }
 
         } catch (SQLException e) {
