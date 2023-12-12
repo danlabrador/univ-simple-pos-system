@@ -727,6 +727,11 @@ public class App extends javax.swing.JFrame {
             this.btnControlLeftButton.setEnabled(false);
             this.btnControlRightButton.setEnabled(false);
             this.btnControlEdit.setEnabled(false);
+            this.pnlControlText.setVisible(false);
+            
+            this.btnControlAdd.setEnabled(false);
+            this.btnControlRemove.setEnabled(false);
+            this.txtControlQty.setEnabled(false);
         } if(!this.isSelling) {
             this.txtControlQty.setEnabled(true);
             this.unstockItem();
@@ -924,6 +929,7 @@ public class App extends javax.swing.JFrame {
         if (found){
             this.txtControlName.setEnabled(true);
         } else {
+            this.tblData.clearSelection();
             this.showMessageDialogue("Product ID not found.");
         }
     } // QA'ed
@@ -955,9 +961,10 @@ public class App extends javax.swing.JFrame {
         
         if(found) {
             this.btnControlEdit.setEnabled(true);
-            this.btnControlLeftButton.setEnabled(false);
+            this.btnControlLeftButton.setEnabled(true);
             this.btnControlRightButton.setEnabled(true);
         } else {
+            this.tblData.clearSelection();
             this.showMessageDialogue("Product ID not found.");
         }
     }
@@ -1264,7 +1271,15 @@ public class App extends javax.swing.JFrame {
     public void addProduct() {
         // Get data from control
         String productName = this.txtControlName.getText();
-        double productPrice = Double.parseDouble(this.txtControlPrice.getText());
+        double productPrice = 0.0;
+        boolean found = false;
+        
+        if (!this.txtControlPrice.getText().equals("") && !this.txtControlPrice.getText().equals("0.0") && !this.txtControlPrice.getText().equals("0")){
+            found = true;
+            System.out.println("Hello");
+            productPrice = Double.parseDouble(this.txtControlPrice.getText());
+        }
+        
         int productQuantity = Integer.parseInt(this.txtControlQty.getText());
 
         // Add the new product to the database
@@ -1283,14 +1298,15 @@ public class App extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) this.tblData.getModel();
 
         // Add the new row to the table model
-        model.addRow(row);
+        if (found){
+            model.addRow(row);
+            // Scroll to the added row and select it
+            int rowCount = model.getRowCount();
+            this.tblData.setRowSelectionInterval(rowCount - 1, rowCount - 1);
+            Rectangle rect = this.tblData.getCellRect(rowCount - 1, 0, true);
+            this.tblData.scrollRectToVisible(rect);
 
-        // Scroll to the added row and select it
-        int rowCount = model.getRowCount();
-        this.tblData.setRowSelectionInterval(rowCount - 1, rowCount - 1);
-        Rectangle rect = this.tblData.getCellRect(rowCount - 1, 0, true);
-        this.tblData.scrollRectToVisible(rect);
-
+        }
         // Reset txtControlName, txtControlPrice, and txtControlID1
         this.txtControlName.setText("");
         this.txtControlPrice.setText("0");
