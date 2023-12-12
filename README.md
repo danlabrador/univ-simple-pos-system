@@ -41,14 +41,7 @@ This POS system allows for:
 - Managing stock levels.
 - Processing sales transactions.
 - Viewing products, processing orders, and managing stock through the user interface.
-
-## Development Tasks
-
-1. **Database Setup:** Establish the JavaDBExam database.
-2. **Product Management:** Implement methods for product management in the `products` table.
-3. **Stock Management:** Develop methods to update stock levels in the `stock` table.
-4. **Transaction Processing:** Implement order creation and update stock levels upon sale completion.
-5. **User Interface Development:** Design and implement a user interface for product viewing, order processing, and stock management.
+- Exporting the order history and updating them in real time.
 
 ## License
 
